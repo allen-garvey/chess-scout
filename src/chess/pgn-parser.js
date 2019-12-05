@@ -28,6 +28,16 @@ function parseHeader(headerRaw){
         header[key] = value;
     });
 
+    if(header.Result === '1-0'){
+        header.Winner = 'White';
+    }
+    else if(header.Result === '0-1'){
+        header.Winner = 'Black';
+    }
+    else{
+        header.Winner = 'Draw';
+    }
+
     return header;
 }
 
