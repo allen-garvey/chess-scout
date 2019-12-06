@@ -5,18 +5,18 @@
             <h4>{{color}}</h4>
             <ol>
                 <li v-for="(moveArray, index) in stat" :key="index">
-                    <h5>{{moveArray[0]}}</h5>
+                    <h5>{{moveArray[0]}} ({{moveArray[1].games}})</h5>
                     <dl>
                         <dt>Wins</dt>
-                        <dd>{{moveArray[1].wins}}</dd>
+                        <dd>{{calculatePercentage(moveArray[1].wins, moveArray[1].games)}}%</dd>
                     </dl>
                     <dl>
                         <dt>Draws</dt>
-                        <dd>{{moveArray[1].draws}}</dd>
+                        <dd>{{calculatePercentage(moveArray[1].draws, moveArray[1].games)}}%</dd>
                     </dl>
                     <dl>
                         <dt>Losses</dt>
-                        <dd>{{moveArray[1].losses}}</dd>
+                        <dd>{{calculatePercentage(moveArray[1].losses, moveArray[1].games)}}%</dd>
                     </dl>
                 </li>
             </ol>
@@ -30,6 +30,11 @@ export default {
         stats: {
             type: Object,
             required: true,
+        },
+    },
+    methods: {
+        calculatePercentage(part, total){
+            return (part / total * 100).toFixed(2);
         },
     },
 };
