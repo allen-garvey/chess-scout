@@ -1,6 +1,6 @@
 <template>
-    <div class="first-move-stats-container">
-        <h3>First Move Stats</h3>
+    <div class="stats-container">
+        <h3>{{title}}</h3>
         <div v-for="(stat, color) in stats" :key="color">
             <h4>{{color}}</h4>
             <ol>
@@ -23,6 +23,10 @@
 <script>
 export default {
     props: {
+        title: {
+            type: String,
+            required: true,
+        },
         stats: {
             type: Object,
             required: true,

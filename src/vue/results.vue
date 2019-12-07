@@ -1,15 +1,21 @@
 <template>
     <div class="results-container">
         <h2>Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h2>
-        <fist-move-stats
+        <stats
+            title="First Move Stats"
             :stats="userGamesStats.firstMoveStats"
         >
-        </fist-move-stats>
+        </stats>
+        <stats
+            title="Opening Stats"
+            :stats="userGamesStats.openingStats"
+        >
+        </stats>
     </div>
 </template>
 
 <script>
-import FistMoveStats from './first-move-stats.vue';
+import Stats from './stats.vue';
 
 export default {
     props: {
@@ -23,7 +29,7 @@ export default {
         },
     },
     components: {
-        FistMoveStats,
+        Stats,
     },
     data(){
         return {
