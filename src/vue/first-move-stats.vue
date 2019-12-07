@@ -4,17 +4,13 @@
         <div v-for="(stat, color) in stats" :key="color">
             <h4>{{color}}</h4>
             <ol>
-                <li v-for="(moveArray, index) in stat" :key="index">
-                    <h5>{{moveArray[0]}} ({{moveArray[1].games}})</h5>
-                    <dl>
+                <li v-for="(moveArray, index) in stat" :key="index" class="stat-item">
+                    <h5 class="stat-title">{{moveArray[0]}} ({{moveArray[1].games}})</h5>
+                    <dl class="stat-percentages">
                         <dt>Wins</dt>
                         <dd>{{calculatePercentage(moveArray[1].wins, moveArray[1].games)}}%</dd>
-                    </dl>
-                    <dl>
                         <dt>Draws</dt>
                         <dd>{{calculatePercentage(moveArray[1].draws, moveArray[1].games)}}%</dd>
-                    </dl>
-                    <dl>
                         <dt>Losses</dt>
                         <dd>{{calculatePercentage(moveArray[1].losses, moveArray[1].games)}}%</dd>
                     </dl>
