@@ -1,7 +1,9 @@
 <template>
     <div class="search-container">
-        <label>Lichess User Name<input type="search" v-model="userNameInput" /></label>
-        <button @click="submitAction()">Submit</button>
+        <form @submit.prevent="submitAction()">
+            <label>Lichess User Name<input type="search" v-model="userNameInput" /></label>
+            <input type="submit" value="Submit" />
+        </form>
     </div>
 </template>
 
