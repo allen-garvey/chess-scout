@@ -1,6 +1,6 @@
 <template>
     <div class="results-container">
-        <h2>Opening stats for {{userName}}</h2>
+        <h2>Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h2>
         <fist-move-stats
             :stats="userGamesStats.firstMoveStats"
         >
@@ -32,6 +32,9 @@ export default {
     computed: {
     },
     methods: {
+        urlForUser(userName){
+            return `https://lichess.org/@/${encodeURIComponent(userName)}`;
+        }
     }
 };
 </script>
