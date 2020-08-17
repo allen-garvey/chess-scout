@@ -2,7 +2,6 @@
     <div class="app-container">
         <search-view
             :on-form-submitted="onFormSubmitted"
-            v-if="!shouldShowResults"
         >
         </search-view>
         <results-view
