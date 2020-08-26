@@ -3,10 +3,10 @@ import { getOpeningStats, getFirstMoveStats } from './chess/stats';
 
 function getApiUrlForUser(userName){
     const apiUrlBase = 'http://lichess.org/api/games/user/';
-    const queryParamBase = '?max=10&opening=true';
-    // return `${apiUrlBase}${encodeURIComponent(userName)}${queryParamBase}`;
+    const queryParamBase = '?max=30&opening=true';
+    return `${apiUrlBase}${encodeURIComponent(userName)}${queryParamBase}`;
     // for testing so not rate limited by lichess
-    return '/assets/test1.pgn';
+    // return '/assets/test1.pgn';
 }
 
 export function getUserGamesStats(userName){
