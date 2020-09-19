@@ -1,3 +1,5 @@
+import { getSortFunc } from './openings';
+
 function getCombinedStats(stats){
     const openings = stats.reduce((combinedStats, [name, stat]) => {
         const key = name.replace(/(:|,).*$/, '');
@@ -21,7 +23,7 @@ function getCombinedStats(stats){
     return Object.keys(openings).map((key) => {
         const opening = openings[key];
         return [key, opening];
-    }).sort((a, b) => b[1].games - a[1].games);
+    }).sort(getSortFunc());
 }
 
 export function getOpeningStatsCondensed({white, black}){

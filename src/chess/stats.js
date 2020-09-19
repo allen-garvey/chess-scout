@@ -1,3 +1,5 @@
+import { getSortFunc } from './openings';
+
 export function getFirstMoveStats(games, playerName){
     return {
         white: getFirstMoveStatsForColor(games, playerName, 'White'),
@@ -83,19 +85,5 @@ function getOpeningStatsForColor(games, playerName, color){
 
     return Object.keys(openings).map((key) => {
         return [key, openings[key]];
-    }).sort((a, b)=>{
-        const stat1 = a[1];
-        const stat2 = b[1];
-
-        if(stat1.wins < stat2.wins){
-            return -1;
-        }
-        if(stat1.losses > stat2.losses){
-            return -1;
-        }
-        if(stat1.draws === stat2.draws){
-            return 0;
-        }
-        return 1;
-    });
+    }).sort(getSortFunc());
 }
