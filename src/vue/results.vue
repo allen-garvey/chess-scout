@@ -7,6 +7,11 @@
         >
         </stats>
         <stats
+            title="Opening Stats Condensed"
+            :stats="userGamesStats.openingStatsCondensed"
+        >
+        </stats>
+        <stats
             title="Opening Stats"
             :stats="userGamesStats.openingStats"
         >
