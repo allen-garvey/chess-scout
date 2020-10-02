@@ -1,4 +1,4 @@
-import { getSortFunc } from './openings';
+import { sortByGameFrequency } from './util';
 
 export function getFirstMoveStats(games, playerName){
     return {
@@ -85,5 +85,5 @@ function getOpeningStatsForColor(games, playerName, color){
 
     return Object.keys(openings).map((key) => {
         return [key, openings[key]];
-    }).sort(getSortFunc());
+    }).sort(sortByGameFrequency());
 }
