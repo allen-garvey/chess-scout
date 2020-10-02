@@ -10,13 +10,16 @@ function separateGames(pgnRaw){
 }
 
 function extractHeaderAndMoves(gamesRaw){
-    return gamesRaw.map((game)=>{
-        const split = game.split('\n\n');
-        return {
-            header: parseHeader(split[0]),
-            first_move: extractFirstMove(split[1]),
-        };
-    });
+    return gamesRaw
+        .map((game)=>{
+            const split = game.split('\n\n');
+            return {
+                header: parseHeader(split[0]),
+                moves: extractMoves(split[1]),
+            };
+        })
+        .filter((game) => game.moves.length > 0)
+        .filter((game) => game.header.Variant === 'Standard');
 }
 
 function parseHeader(headerRaw){
@@ -41,6 +44,10 @@ function parseHeader(headerRaw){
     return header;
 }
 
-function extractFirstMove(movesRaw){
-    return movesRaw.replace(/^1\. | .*$/g, '');
+function extractMoves(movesRaw){
+    return movesRaw
+        .replace(/ (1-0|0-1|1\/2-1\/2)$/, '')
+        .split(/\d+\. /)
+        .filter(line => line)
+        .map((line) => line.replace(/\s+$/, '').split(' '));
 }

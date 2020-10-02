@@ -14,7 +14,6 @@ function getFirstMoveStatsForColor(games, playerName, color){
         if(header[color] !== playerName){
             return;
         }
-        const moveKey = game.first_move;
         const stat = openings[moveKey] || {wins: 0, draws: 0, losses: 0, games: 0};
 
         if(header.Winner === 'Draw'){
