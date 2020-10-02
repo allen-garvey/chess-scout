@@ -37,7 +37,6 @@ export default {
         onFormSubmitted(userName){
             this.userName = userName;
             getUserGamesStats(this.userName).then((stats)=>{
-                console.log(stats);
                 this.userGamesStats = stats;
                 this.shouldShowResults = true;
             });
