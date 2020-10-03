@@ -1,6 +1,16 @@
 <template>
     <div class="results-container">
         <h2>Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h2>
+        <move-tree
+            title="White"
+            :tree="userGamesStats.moveTrees.white"
+        >
+        </move-tree>
+        <move-tree
+            title="Black"
+            :tree="userGamesStats.moveTrees.black"
+        >
+        </move-tree>
         <stats
             title="First Move Stats"
             :stats="userGamesStats.firstMoveStats"
@@ -21,6 +31,7 @@
 
 <script>
 import Stats from './stats.vue';
+import MoveTree from './move-tree.vue';
 
 export default {
     props: {
@@ -35,6 +46,7 @@ export default {
     },
     components: {
         Stats,
+        MoveTree,
     },
     data(){
         return {
