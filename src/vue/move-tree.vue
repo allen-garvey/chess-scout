@@ -49,8 +49,23 @@ export default {
         };
     },
     computed: {
+        isRoot(){
+            return this.path.length === 0;
+        },
         treeTitle(){
-            return `- ${this.path.join(' ')}`;
+            if(this.isRoot){
+                return '';
+            }
+            let ret = ' - ';
+            let moveNumber = 0;
+            this.path.forEach((move, i) => {
+                if(i % 2 === 0){
+                    moveNumber++;
+                    ret += `${moveNumber}.`;
+                }
+                ret += `${move} `;
+            });
+            return ret;
         },
         children(){
             return Object.keys(this.currentNode.children).sort((key1, key2) => this.currentNode.children[key2].games - this.currentNode.children[key1].games);
