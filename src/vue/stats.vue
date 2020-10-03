@@ -4,7 +4,11 @@
         <div v-for="(stat, color) in stats" :key="color">
             <h4>{{color}}</h4>
             <ol>
-                <li v-for="(moveArray, index) in stat" :key="index" class="stat-item">
+                <li 
+                    v-for="(moveArray, index) in stat" 
+                    :key="index" 
+                    class="stat-item"
+                >
                     <h5 class="stat-title">{{moveArray[0]}} ({{moveArray[1].games}})</h5>
                     <dl class="stat-percentages">
                         <dt>Wins</dt>
