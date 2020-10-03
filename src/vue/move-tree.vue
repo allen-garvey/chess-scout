@@ -2,6 +2,7 @@
     <div class="stats-container">
         <div>
             <h4>{{title}}{{treeTitle}}</h4>
+            <button v-if="!isRoot" @click="resetTree()">Reset</button>
             <ol>
                 <li 
                     v-for="(childKey, index) in children" 
@@ -81,6 +82,10 @@ export default {
         childClicked(key){
             this.path.push(key);
             this.currentNode = this.currentNode.children[key];
+        },
+        resetTree(){
+            this.path = [];
+            this.currentNode = this.tree;
         },
     },
 };
