@@ -1,6 +1,7 @@
 import { parsePgn } from './chess/pgn-parser';
 import { getOpeningStats, getFirstMoveStats } from './chess/stats';
 import { getOpeningStatsCondensed } from './chess/opening-stats-condensed';
+import { getMoveTrees } from './chess/move-tree';
 
 function getApiUrlForUser(userName){
     const apiUrlBase = 'http://lichess.org/api/games/user/';
@@ -23,6 +24,7 @@ export function getUserGamesStats(userName){
             openingStats,
             openingStatsCondensed: getOpeningStatsCondensed(openingStats),
             firstMoveStats: getFirstMoveStats(games, userName),
+            moveTrees: getMoveTrees(games, userName),
         };
     });
 }
