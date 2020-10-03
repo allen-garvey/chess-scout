@@ -1,4 +1,4 @@
-import { sortByGameFrequency } from './util';
+import { sortByGameFrequency, getResult } from './util';
 
 export function getFirstMoveStats(games, playerName){
     return {
@@ -17,16 +17,10 @@ function getFirstMoveStatsForColor(games, playerName, color){
         const moveKey = game.moves[0][0];
         const stat = openings[moveKey] || {wins: 0, draws: 0, losses: 0, games: 0};
 
-        if(header.Winner === 'Draw'){
-            stat.draws += 1;
-        }
-        else if(header.Winner === color){
-            stat.wins += 1;
-        }
-        else{
-            stat.losses += 1;
-        }
-
+        const result = getResult(header, color);
+        stat.draws += result.draws;
+        stat.wins += result.wins;
+        stat.losses += result.losses;
         stat.games++;
 
         openings[moveKey] = stat;
@@ -54,16 +48,10 @@ function getOpeningStatsForColor(games, playerName, color){
         const key = header.Opening;
         const stat = openings[key] || {wins: 0, draws: 0, losses: 0, games: 0, eco: header.ECO};
 
-        if(header.Winner === 'Draw'){
-            stat.draws += 1;
-        }
-        else if(header.Winner === color){
-            stat.wins += 1;
-        }
-        else{
-            stat.losses += 1;
-        }
-
+        const result = getResult(header, color);
+        stat.draws += result.draws;
+        stat.wins += result.wins;
+        stat.losses += result.losses;
         stat.games++;
 
         openings[key] = stat;
