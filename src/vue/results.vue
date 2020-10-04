@@ -1,5 +1,5 @@
 <template>
-    <div class="results-container">
+    <div class="results-container" v-if="userGamesStats">
         <h2>Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h2>
         <chess-board></chess-board>
         <move-tree
@@ -34,15 +34,12 @@
 import Stats from './stats.vue';
 import MoveTree from './move-tree.vue';
 import ChessBoard from './chess-board.vue';
+import { getUserGamesStats } from '../ajax';
 
 export default {
     props: {
         userName: {
             type: String,
-            required: true,
-        },
-        userGamesStats: {
-            type: Object,
             required: true,
         },
     },
@@ -51,8 +48,14 @@ export default {
         MoveTree,
         ChessBoard,
     },
+    created(){
+        getUserGamesStats(this.userName).then((stats)=>{
+            this.userGamesStats = stats;
+        });
+    },
     data(){
         return {
+            userGamesStats: null,
         };
     },
     computed: {

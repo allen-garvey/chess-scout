@@ -16,6 +16,9 @@ module.exports = {
         contentBase: path.join(__dirname, 'public'),
         publicPath: 'http://localhost:3000/assets/',
         port: 3000,
+        historyApiFallback: {
+            index: 'index.html'
+        },
     },
     module: {
         rules: [

@@ -9,12 +9,6 @@
 
 <script>
 export default {
-    props: {
-        onFormSubmitted: {
-            type: Function,
-            required: true,
-        },
-    },
     data(){
         return {
             userNameInput: '',
@@ -22,7 +16,7 @@ export default {
     },
     methods: {
         submitAction(){
-            this.onFormSubmitted(this.userNameInput);
+            this.$emit('form-submitted', this.userNameInput);
         },
     }
 };
