@@ -49,9 +49,10 @@ export default {
         ChessBoard,
     },
     created(){
-        getUserGamesStats(this.userName).then((stats)=>{
-            this.userGamesStats = stats;
-        });
+        this.loadUserGames();
+    },
+    beforeRouteUpdate(){
+        this.loadUserGames();
     },
     data(){
         return {
@@ -61,9 +62,14 @@ export default {
     computed: {
     },
     methods: {
+        loadUserGames(){
+            getUserGamesStats(this.userName).then((stats)=>{
+                this.userGamesStats = stats;
+            });
+        },
         urlForUser(userName){
             return `https://lichess.org/@/${encodeURIComponent(userName)}`;
-        }
+        },
     }
 };
 </script>
