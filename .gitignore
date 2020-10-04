@@ -19,7 +19,6 @@ bin/*
 *.jpg
 *.jpeg
 *.tiff
-*.svg
 *.ico
 Thumbs.db
 *.ttf
