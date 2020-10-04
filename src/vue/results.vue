@@ -1,6 +1,7 @@
 <template>
     <div class="results-container">
         <h2>Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h2>
+        <chess-board></chess-board>
         <move-tree
             title="White"
             :tree="userGamesStats.moveTrees.white"
@@ -32,6 +33,7 @@
 <script>
 import Stats from './stats.vue';
 import MoveTree from './move-tree.vue';
+import ChessBoard from './chess-board.vue';
 
 export default {
     props: {
@@ -47,6 +49,7 @@ export default {
     components: {
         Stats,
         MoveTree,
+        ChessBoard,
     },
     data(){
         return {
