@@ -82,7 +82,7 @@ function drawWhiteQueen(context, x, y){
     }; 
 
     context.resetTransform();
-    context.translate(x, y);
+    context.translate(x+2, y);
     context.scale(1.3, 1.3);
     context.fillStyle = WHITE;
     context.strokeStyle = BLACK;
