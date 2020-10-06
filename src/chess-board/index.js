@@ -32,7 +32,7 @@ function getStartingPostion(){
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-        ['wQ', 'wQ', 'wQ', 'wQ', 'wQ', 'wQ', 'wQ', 'wQ'],
+        ['wR', 'wQ', 'wQ', 'wQ', 'wQ', 'wQ', 'wQ', 'wR'],
     ];
 }
 
@@ -45,6 +45,8 @@ function drawPieces(context, board){
                 return drawWhiteQueen(context, xPosition, yPosition);
             case 'bQ':
                 return drawBlackQueen(context, xPosition, yPosition);
+            case 'wR':
+                return drawWhiteRook(context, xPosition, yPosition);
             case 'wP':
                 return drawPawn(context, xPosition, yPosition, true);
             case 'bP':
@@ -161,4 +163,28 @@ function drawBlackQueen(context, x, y){
     context.stroke(new Path2D('M 12.5,31.5 L 32.5,31.5'));
     context.stroke(new Path2D('M 11.5,34.5 A 35,35 1 0 0 33.5,34.5'));
     context.stroke(new Path2D('M 10.5,37.5 A 35,35 1 0 0 34.5,37.5'));
+}
+
+function drawWhiteRook(context, x, y){
+    context.resetTransform();
+    context.translate(x+2, y);
+    context.scale(1.3, 1.3);
+    context.fillStyle = WHITE;
+    context.strokeStyle = BLACK;
+    context.lineWidth = LINE_WIDTH;
+    context.lineCap = 'butt';
+
+    [
+        'M 9,39 L 36,39 L 36,36 L 9,36 L 9,39 z',
+        'M 12,36 L 12,32 L 33,32 L 33,36 L 12,36 z',
+        'M 11,14 L 11,9 L 15,9 L 15,11 L 20,11 L 20,9 L 25,9 L 25,11 L 30,11 L 30,9 L 34,9 L 34,14',
+        'M 34,14 L 31,17 L 14,17 L 11,14',
+        'M 31,17 L 31,29.5 L 14,29.5 L 14,17',
+        'M 31,29.5 L 32.5,32 L 12.5,32 L 14,29.5',
+        'M 11,14 L 34,14',
+    ].forEach((coord) => {
+        const path = new Path2D(coord);
+        context.fill(path);
+        context.stroke(path);
+    });
 }
