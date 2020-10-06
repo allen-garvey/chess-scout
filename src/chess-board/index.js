@@ -25,7 +25,7 @@ function drawSquares(context){
 
 function getStartingPostion(){
     return [
-        ['bR', 'bQ', 'bQ', 'bQ', 'bQ', 'bQ', 'bQ', 'bR'],
+        ['bR', 'bQ', 'bQ', 'bQ', 'bK', 'bQ', 'bQ', 'bR'],
         ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['00', '00', '00', '00', '00', '00', '00', '00'],
@@ -47,6 +47,8 @@ function drawPieces(context, board){
                 return drawBlackQueen(context, xPosition, yPosition);
             case 'wK':
                 return drawWhiteKing(context, xPosition, yPosition);
+            case 'bK':
+                return drawBlackKing(context, xPosition, yPosition);
             case 'wR':
                 return drawWhiteRook(context, xPosition, yPosition);
             case 'bR':
@@ -252,6 +254,40 @@ function drawWhiteKing(context, x, y){
         'M 11.5,30 C 17,27 27,27 32.5,30',
         'M 11.5,33.5 C 17,30.5 27,30.5 32.5,33.5',
         'M 11.5,37 C 17,34 27,34 32.5,37',
+    ].forEach((coord) => {
+        context.stroke(new Path2D(coord));
+    });
+}
+
+function drawBlackKing(context, x, y){
+    context.resetTransform();
+    context.translate(x+2, y);
+    context.scale(1.3, 1.3);
+    context.fillStyle = BLACK;
+    context.strokeStyle = BLACK;
+    context.lineWidth = LINE_WIDTH;
+    context.lineCap = 'butt';
+
+    [
+        'M 22.5,25 C 22.5,25 27,17.5 25.5,14.5 C 25.5,14.5 24.5,12 22.5,12 C 20.5,12 19.5,14.5 19.5,14.5 C 18,17.5 22.5,25 22.5,25',
+        'M 11.5,37 C 17,40.5 27,40.5 32.5,37 L 32.5,30 C 32.5,30 41.5,25.5 38.5,19.5 C 34.5,13 25,16 22.5,23.5 L 22.5,27 L 22.5,23.5 C 19,16 9.5,13 6.5,19.5 C 3.5,25.5 11.5,29.5 11.5,29.5 L 11.5,37 z',
+    ].forEach((coord) => {
+        const path = new Path2D(coord);
+        context.fill(path);
+        context.stroke(path);
+    });
+
+    [
+        'M 22.5,11.63 L 22.5,6',
+        'M 20,8 L 25,8',
+    ].forEach((coord) => {
+        context.stroke(new Path2D(coord));
+    });
+
+    context.strokeStyle = WHITE;
+    [
+        'M 32,29.5 C 32,29.5 40.5,25.5 38.03,19.85 C 34.15,14 25,18 22.5,24.5 L 22.51,26.6 L 22.5,24.5 C 20,18 9.906,14 6.997,19.85 C 4.5,25.5 11.85,28.85 11.85,28.85',
+        'M 11.5,30 C 17,27 27,27 32.5,30 M 11.5,33.5 C 17,30.5 27,30.5 32.5,33.5 M 11.5,37 C 17,34 27,34 32.5,37',
     ].forEach((coord) => {
         context.stroke(new Path2D(coord));
     });
