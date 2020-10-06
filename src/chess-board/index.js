@@ -8,7 +8,7 @@ export function drawBoard(context){
     context.canvas.height = dimensions;
     context.canvas.width = dimensions;
     drawSquares(context);
-    drawPieces(context);
+    drawPieces(context, getStartingPostion());
 }
 
 function drawSquares(context){
@@ -23,15 +23,34 @@ function drawSquares(context){
     }
 }
 
-function drawPieces(context){
-    let isWhite = true;
-    for(let x=0;x<dimensions;x+=square){
-        isWhite = !isWhite;
-        for(let y=0;y<dimensions;y+=square){
-            // drawPawn(context, x, y, isWhite);
-            drawWhiteQueen(context, x, y);
+function getStartingPostion(){
+    return [
+        ['00', '00', '00', '00', '00', '00', '00', '00', ],
+        ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', ],
+        ['00', '00', '00', '00', '00', '00', '00', '00', ],
+        ['00', '00', '00', '00', '00', '00', '00', '00', ],
+        ['00', '00', '00', '00', '00', '00', '00', '00', ],
+        ['00', '00', '00', '00', '00', '00', '00', '00', ],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', ],
+        ['wQ', 'wQ', 'wQ', 'wQ', 'wQ', 'wQ', 'wQ', 'wQ', ],
+    ];
+}
+
+function drawPieces(context, board){
+    board.forEach((line, y) => line.forEach((piece, x) => {
+        const xPosition = x * square;
+        const yPosition = y * square;
+        switch(piece){
+            case 'wQ':
+                return drawWhiteQueen(context, xPosition, yPosition);
+            case 'wP':
+                return drawPawn(context, xPosition, yPosition, true);
+            case 'bP':
+                return drawPawn(context, xPosition, yPosition, false);
+            default:
+                return;
         }
-    }
+    }));
 }
 
 function drawPawn(context, x, y, isWhite){
