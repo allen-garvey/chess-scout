@@ -25,7 +25,7 @@ function drawSquares(context){
 
 function getStartingPostion(){
     return [
-        ['bR', 'bQ', 'bQ', 'bQ', 'bK', 'bQ', 'bQ', 'bR'],
+        ['bR', 'bQ', 'bB', 'bQ', 'bK', 'bB', 'bQ', 'bR'],
         ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['00', '00', '00', '00', '00', '00', '00', '00'],
@@ -54,7 +54,9 @@ function drawPieces(context, board){
             case 'bR':
                 return drawBlackRook(context, xPosition, yPosition);
             case 'wB':
-                return drawWhiteBishop(context, xPosition, yPosition);
+                return drawBishop(context, xPosition, yPosition, true);
+            case 'bB':
+                return drawBishop(context, xPosition, yPosition, false);
             case 'wP':
                 return drawPawn(context, xPosition, yPosition, true);
             case 'bP':
@@ -295,11 +297,11 @@ function drawBlackKing(context, x, y){
     });
 }
 
-function drawWhiteBishop(context, x, y){
+function drawBishop(context, x, y, isWhite){
     context.resetTransform();
     context.translate(x+2, y);
     context.scale(1.3, 1.3);
-    context.fillStyle = WHITE;
+    context.fillStyle = isWhite ? WHITE : BLACK;
     context.strokeStyle = BLACK;
     context.lineWidth = LINE_WIDTH;
     context.lineCap = 'butt';
@@ -313,7 +315,8 @@ function drawWhiteBishop(context, x, y){
         context.fill(path);
         context.stroke(path);
     });
-
+    
+    context.strokeStyle = isWhite ? BLACK : WHITE;
     [
         'M 17.5,26 L 27.5,26 M 15,30 L 30,30 M 22.5,15.5 L 22.5,20.5 M 20,18 L 25,18',
     ].forEach((coord) => {
