@@ -32,7 +32,7 @@ function getStartingPostion(){
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-        ['wR', 'wQ', 'wQ', 'wQ', 'wK', 'wQ', 'wQ', 'wR'],
+        ['wR', 'wQ', 'wB', 'wQ', 'wK', 'wB', 'wQ', 'wR'],
     ];
 }
 
@@ -53,6 +53,8 @@ function drawPieces(context, board){
                 return drawWhiteRook(context, xPosition, yPosition);
             case 'bR':
                 return drawBlackRook(context, xPosition, yPosition);
+            case 'wB':
+                return drawWhiteBishop(context, xPosition, yPosition);
             case 'wP':
                 return drawPawn(context, xPosition, yPosition, true);
             case 'bP':
@@ -288,6 +290,32 @@ function drawBlackKing(context, x, y){
     [
         'M 32,29.5 C 32,29.5 40.5,25.5 38.03,19.85 C 34.15,14 25,18 22.5,24.5 L 22.51,26.6 L 22.5,24.5 C 20,18 9.906,14 6.997,19.85 C 4.5,25.5 11.85,28.85 11.85,28.85',
         'M 11.5,30 C 17,27 27,27 32.5,30 M 11.5,33.5 C 17,30.5 27,30.5 32.5,33.5 M 11.5,37 C 17,34 27,34 32.5,37',
+    ].forEach((coord) => {
+        context.stroke(new Path2D(coord));
+    });
+}
+
+function drawWhiteBishop(context, x, y){
+    context.resetTransform();
+    context.translate(x+2, y);
+    context.scale(1.3, 1.3);
+    context.fillStyle = WHITE;
+    context.strokeStyle = BLACK;
+    context.lineWidth = LINE_WIDTH;
+    context.lineCap = 'butt';
+
+    [
+        'M 9,36 C 12.39,35.03 19.11,36.43 22.5,34 C 25.89,36.43 32.61,35.03 36,36 C 36,36 37.65,36.54 39,38 C 38.32,38.97 37.35,38.99 36,38.5 C 32.61,37.53 25.89,38.96 22.5,37.5 C 19.11,38.96 12.39,37.53 9,38.5 C 7.646,38.99 6.677,38.97 6,38 C 7.354,36.06 9,36 9,36 z',
+        'M 15,32 C 17.5,34.5 27.5,34.5 30,32 C 30.5,30.5 30,30 30,30 C 30,27.5 27.5,26 27.5,26 C 33,24.5 33.5,14.5 22.5,10.5 C 11.5,14.5 12,24.5 17.5,26 C 17.5,26 15,27.5 15,30 C 15,30 14.5,30.5 15,32 z',
+        'M 25 8 A 2.5 2.5 0 1 1  20,8 A 2.5 2.5 0 1 1  25 8 z',
+    ].forEach((coord) => {
+        const path = new Path2D(coord);
+        context.fill(path);
+        context.stroke(path);
+    });
+
+    [
+        'M 17.5,26 L 27.5,26 M 15,30 L 30,30 M 22.5,15.5 L 22.5,20.5 M 20,18 L 25,18',
     ].forEach((coord) => {
         context.stroke(new Path2D(coord));
     });
