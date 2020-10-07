@@ -32,7 +32,7 @@ function getStartingPostion(){
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-        ['wR', 'wQ', 'wB', 'wQ', 'wK', 'wB', 'wQ', 'wR'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
     ];
 }
 
@@ -53,6 +53,8 @@ function drawPieces(context, board){
                 return drawWhiteRook(context, xPosition, yPosition);
             case 'bR':
                 return drawBlackRook(context, xPosition, yPosition);
+            case 'wN':
+                return drawWhiteKnight(context, xPosition, yPosition);
             case 'wB':
                 return drawBishop(context, xPosition, yPosition, true);
             case 'bB':
@@ -322,4 +324,45 @@ function drawBishop(context, x, y, isWhite){
     ].forEach((coord) => {
         context.stroke(new Path2D(coord));
     });
+}
+
+function drawWhiteKnight(context, x, y){
+    context.resetTransform();
+    context.translate(x+2, y);
+    context.scale(1.3, 1.3);
+    context.fillStyle = WHITE;
+    context.strokeStyle = BLACK;
+    context.lineWidth = LINE_WIDTH;
+    context.lineCap = 'butt';
+
+    [
+        'M 22,10 C 32.5,11 38.5,18 38,39 L 15,39 C 15,30 25,32.5 23,18',
+        'M 24,18 C 24.38,20.91 18.45,25.37 16,27 C 13,29 13.18,31.34 11,31 C 9.958,30.06 12.41,27.96 11,28 C 10,28 11.19,29.23 10,30 C 9,30 5.997,31 6,26 C 6,24 12,14 12,14 C 12,14 13.89,12.1 14,10.5 C 13.27,9.506 13.5,8.5 13.5,7.5 C 14.5,6.5 16.5,10 16.5,10 L 18.5,10 C 18.5,10 19.28,8.008 21,7 C 22,7 22,10 22,10',
+    ].forEach((coord) => {
+        const path = new Path2D(coord);
+        context.fill(path);
+        context.stroke(path);
+    });
+
+    context.fillStyle = BLACK;
+    [
+        'M 9.5 25.5 A 0.5 0.5 0 1 1 8.5,25.5 A 0.5 0.5 0 1 1 9.5 25.5 z',
+    ].forEach((coord) => {
+        const path = new Path2D(coord);
+        context.fill(path);
+        context.stroke(path);
+    });
+
+    const matrix = document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGMatrix();
+    matrix.a = 0.866;
+    matrix.b = 0.5;
+    matrix.c = -0.5;
+    matrix.d = 0.866;
+    matrix.e = 9.693;
+    matrix.f = -5.173;
+
+    const path = new Path2D();
+    path.addPath(new Path2D('M 15 15.5 A 0.5 1.5 0 1 1  14,15.5 A 0.5 1.5 0 1 1  15 15.5 z'), matrix);
+    context.fill(path);
+    context.stroke(path);
 }
