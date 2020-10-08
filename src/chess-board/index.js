@@ -6,11 +6,11 @@ const LINE_WIDTH = 1.5;
 const WHITE = '#fff';
 const BLACK = '#000';
 
-export function drawBoard(context){
+export function drawBoard(context, moves){
     context.canvas.height = dimensions;
     context.canvas.width = dimensions;
     drawSquares(context);
-    drawPieces(context, pgn.getStartingPostion());
+    drawPieces(context, pgn.pgnToPosition(moves));
 }
 
 function drawSquares(context){

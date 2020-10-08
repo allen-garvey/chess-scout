@@ -72,6 +72,14 @@ export default {
             return Object.keys(this.currentNode.children).sort((key1, key2) => this.currentNode.children[key2].games - this.currentNode.children[key1].games);
         },
     },
+    watch: {
+        path: {
+            handler(){
+                this.$emit('tree-updated', this.path);
+            },
+            deep: true,
+        }
+    },
     methods: {
         calculatePercentage(part, total){
             return (part / total * 100).toFixed(2);

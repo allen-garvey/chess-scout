@@ -9,11 +9,14 @@ import { drawBoard } from '../chess-board';
 
 export default {
     props: {
-        
+        moves: {
+            type: Array,
+            required: true,
+        },
     },
     mounted(){
         this.context = this.$refs.canvas.getContext('2d');
-        drawBoard(this.context);
+        drawBoard(this.context, this.moves);
     },
     data(){
         return {
@@ -21,6 +24,14 @@ export default {
         };
     },
     computed: {
+    },
+    watch: {
+        moves: {
+            handler(){
+                drawBoard(this.context, this.moves);
+            },
+            deep: true,
+        },
     },
     methods: {
     }

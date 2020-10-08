@@ -1,15 +1,17 @@
 <template>
     <div class="results-container" v-if="userGamesStats">
         <h2>Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h2>
-        <chess-board></chess-board>
+        <chess-board :moves="moves"></chess-board>
         <move-tree
             title="White"
             :tree="userGamesStats.moveTrees.white"
+            @tree-updated="moveTreeUpdated"
         >
         </move-tree>
         <move-tree
             title="Black"
             :tree="userGamesStats.moveTrees.black"
+            @tree-updated="moveTreeUpdated"
         >
         </move-tree>
         <stats
@@ -57,6 +59,7 @@ export default {
     data(){
         return {
             userGamesStats: null,
+            moves: [],
         };
     },
     computed: {
@@ -69,6 +72,9 @@ export default {
         },
         urlForUser(userName){
             return `https://lichess.org/@/${encodeURIComponent(userName)}`;
+        },
+        moveTreeUpdated(moves){
+            this.moves = moves;
         },
     }
 };
