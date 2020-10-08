@@ -1,3 +1,5 @@
+import pgn from './pgn';
+
 const square = 64;
 const dimensions = square * 8;
 const LINE_WIDTH = 1.5;
@@ -8,7 +10,7 @@ export function drawBoard(context){
     context.canvas.height = dimensions;
     context.canvas.width = dimensions;
     drawSquares(context);
-    drawPieces(context, getStartingPostion());
+    drawPieces(context, pgn.getStartingPostion());
 }
 
 function drawSquares(context){
@@ -21,19 +23,6 @@ function drawSquares(context){
             context.fillRect(x, y, dimensions, dimensions);
         }
     }
-}
-
-function getStartingPostion(){
-    return [
-        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
-        ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
-        ['00', '00', '00', '00', '00', '00', '00', '00'],
-        ['00', '00', '00', '00', '00', '00', '00', '00'],
-        ['00', '00', '00', '00', '00', '00', '00', '00'],
-        ['00', '00', '00', '00', '00', '00', '00', '00'],
-        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
-    ];
 }
 
 function drawPieces(context, board){
