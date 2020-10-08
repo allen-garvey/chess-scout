@@ -83,6 +83,19 @@ function movePawn(position, move, isWhite){
     return newPosition;
 }
 
+function pawnTakes(position, move, isWhite){
+    const column = getColumn(move[2]);
+    const row = getRow(move[3]);
+    const color = isWhite ? WHITE : BLACK;
+    const newPosition = copyPosition(position);
+    const piece = `${color}${PAWN}`;
+    newPosition[row][column] = piece;
+    const rowFrom = isWhite ? row + 1 : row - 1;
+    newPosition[rowFrom][getColumn(move[0])] = EMPTY_CELL;
+
+    return newPosition;
+}
+
 function pgnToPosition(moves){
     let position = getStartingPostion();
     let isWhite = false;
@@ -92,6 +105,9 @@ function pgnToPosition(moves){
         switch(true){
             case /^\w\d$/.test(move):
                 position = movePawn(position, move, isWhite);
+                break;
+            case /^[a-h]x/.test(move):
+                position = pawnTakes(position, move, isWhite);
                 break;
         }
     });
