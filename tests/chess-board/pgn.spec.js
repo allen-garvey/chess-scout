@@ -71,3 +71,27 @@ test('PGN module #pgnToPosition pawn takes correctly', t => {
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
     ]);
 });
+
+test('PGN module #pgnToPosition pawn takes correctly en passant', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4', 'a6', 'e5', 'd5', 'exd6']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['00', 'bP', 'bP', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['bP', '00', '00', 'wP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', '00', 'wP', 'wP', 'wP'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+
+    t.deepEqual(pgn.pgnToPosition(['a3', 'e5', 'h3', 'e4', 'd4', 'exd3']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', '00', '00', 'bP', '00', '00', '00', 'wP'],
+        ['00', 'wP', 'wP', '00', 'wP', 'wP', 'wP', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});

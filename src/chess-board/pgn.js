@@ -89,8 +89,12 @@ function pawnTakes(position, move, isWhite){
     const color = isWhite ? WHITE : BLACK;
     const newPosition = copyPosition(position);
     const piece = `${color}${PAWN}`;
-    newPosition[row][column] = piece;
     const rowFrom = isWhite ? row + 1 : row - 1;
+    // check for en passant
+    if(newPosition[row][column] === EMPTY_CELL){
+        newPosition[rowFrom][column] = EMPTY_CELL;
+    }
+    newPosition[row][column] = piece;
     newPosition[rowFrom][getColumn(move[0])] = EMPTY_CELL;
 
     return newPosition;
