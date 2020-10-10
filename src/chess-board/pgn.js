@@ -2,6 +2,7 @@ const BLACK = 'b';
 const WHITE = 'w';
 const EMPTY_CELL = '00';
 const PAWN = 'P';
+const KNIGHT = 'N';
 
 function getStartingPostion(){
     return [
@@ -66,6 +67,38 @@ function getColumn(column){
     return ret;
 }
 
+function findPieces(position, piece){
+    const ret = [];
+    position.forEach((line, y) => line.forEach((p, x) => {
+        if(p === piece){
+            ret.push({
+                x,
+                y,
+            });
+        }
+    }));
+    return ret;
+}
+
+function moveKnight(position, move, isWhite){
+    const column = getColumn(move[1]);
+    const row = getRow(move[2]);
+    const piece = `${isWhite ? WHITE : BLACK}${KNIGHT}`;
+    const foundPieces = findPieces(position, piece);
+    const newPosition = copyPosition(position);
+    newPosition[row][column] = piece;
+
+    for(let i=0;i<foundPieces.length;i++){
+        const coordinate = foundPieces[i];
+        if((Math.abs(column - coordinate.x) === 1 && Math.abs(row - coordinate.y) === 2) || (Math.abs(column - coordinate.x) === 2 && Math.abs(row - coordinate.y) === 1)){
+            newPosition[coordinate.y][coordinate.x] = EMPTY_CELL;
+            break;
+        }
+    }
+    
+    return newPosition;
+}
+
 function movePawn(position, move, isWhite){
     const column = getColumn(move[0]);
     const row = getRow(move[1]);
@@ -112,6 +145,9 @@ function pgnToPosition(moves){
                 break;
             case /^[a-h]x/.test(move):
                 position = pawnTakes(position, move, isWhite);
+                break;
+            case /^N[a-h]\d$/.test(move):
+                position = moveKnight(position, move, isWhite);
                 break;
         }
     });
