@@ -4,6 +4,8 @@ const EMPTY_CELL = '00';
 const PAWN = 'P';
 const KNIGHT = 'N';
 const BISHOP = 'B';
+const QUEEN = 'Q';
+const KING = 'K';
 
 function getStartingPostion(){
     return [
@@ -126,6 +128,18 @@ function moveBishop(position, move, isWhite){
     return newPosition;
 }
 
+function moveSinglePiece(position, move, isWhite, pieceSymbol){
+    const column = getColumn(move[move.length - 2]);
+    const row = getRow(move[move.length - 1]);
+    const piece = `${isWhite ? WHITE : BLACK}${pieceSymbol}`;
+    const foundPiece = findPieces(position, piece)[0];
+    const newPosition = copyPosition(position);
+    newPosition[row][column] = piece;
+    newPosition[foundPiece.y][foundPiece.x] = EMPTY_CELL;
+    
+    return newPosition;
+}
+
 function movePawn(position, move, isWhite){
     const column = getColumn(move[0]);
     const row = getRow(move[1]);
@@ -178,6 +192,13 @@ function pgnToPosition(moves){
                 break;
             case /^B[a-h]?x?[a-h]\d$/.test(move):
                 position = moveBishop(position, move, isWhite);
+                break;
+            case /^Qx?[a-h]\d$/.test(move):
+                // TODO: this will not work if there are multiple queens
+                position = moveSinglePiece(position, move, isWhite, QUEEN);
+                break;
+            case /^Kx?[a-h]\d$/.test(move):
+                position = moveSinglePiece(position, move, isWhite, KING);
                 break;
         }
     });
