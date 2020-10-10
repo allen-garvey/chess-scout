@@ -1,7 +1,7 @@
 import { getResult } from './util';
 
 export function getMoveTrees(games, playerName){
-    const moveDepth = 5;
+    const moveDepth = 10;
     return {
         white: getMoveTreesForColor(games, playerName, 'White', moveDepth),
         black: getMoveTreesForColor(games, playerName, 'Black', moveDepth),
