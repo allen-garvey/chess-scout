@@ -118,6 +118,17 @@ test('PGN module #pgnToPosition moves knights correctly', t => {
         ['wP', 'wP', 'wP', '00', 'wP', 'wP', 'wP', 'wP'],
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
     ]);
+
+    t.deepEqual(pgn.pgnToPosition(['e4', 'd6', 'Ne2', 'Nd7']), [
+        ['bR', '00', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', 'bN', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', 'wP', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wN', 'wP', 'wP', 'wP'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', '00', 'wR'],
+    ]);
 });
 
 test('PGN module #pgnToPosition knight takes correctly', t => {
@@ -141,5 +152,18 @@ test('PGN module #pgnToPosition knight takes correctly', t => {
         ['00', '00', '00', '00', '00', '00', '00', '00'],
         ['wP', 'wP', 'wP', '00', '00', 'wP', 'wP', 'wP'],
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition knight moves correctly when knight column is specified', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4', 'c6', 'd4', 'd5', 'Nc3', 'dxe4', 'Nxe4', 'Nd7', 'Nf3', 'Ngf6']), [
+        ['bR', '00', 'bB', 'bQ', 'bK', 'bB', '00', 'bR'],
+        ['bP', 'bP', '00', 'bN', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', 'bP', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', 'wP', 'wN', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', 'wN', '00', '00'],
+        ['wP', 'wP', 'wP', '00', '00', 'wP', 'wP', 'wP'],
+        ['wR', '00', 'wB', 'wQ', 'wK', 'wB', '00', 'wR'],
     ]);
 });
