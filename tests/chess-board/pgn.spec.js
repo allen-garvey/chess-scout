@@ -167,3 +167,27 @@ test('PGN module #pgnToPosition knight moves correctly when knight column is spe
         ['wR', '00', 'wB', 'wQ', 'wK', 'wB', '00', 'wR'],
     ]);
 });
+
+test('PGN module #pgnToPosition moves bishops correctly', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4', 'e5', 'Bc4']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', 'bP', '00', '00', '00'],
+        ['00', '00', 'wB', '00', 'wP', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', '00', 'wP', 'wP', 'wP'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', '00', 'wN', 'wR'],
+    ]);
+
+    t.deepEqual(pgn.pgnToPosition(['d4', 'd5', 'c4', 'Bf5']), [
+        ['bR', 'bN', '00', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', 'bP', '00', 'bB', '00', '00'],
+        ['00', '00', 'wP', 'wP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', '00', '00', 'wP', 'wP', 'wP', 'wP'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
