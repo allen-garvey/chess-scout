@@ -81,8 +81,8 @@ function findPieces(position, piece){
 }
 
 function moveKnight(position, move, isWhite){
-    const column = getColumn(move[1]);
-    const row = getRow(move[2]);
+    const column = getColumn(move[move.length - 2]);
+    const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${KNIGHT}`;
     const foundPieces = findPieces(position, piece);
     const newPosition = copyPosition(position);
@@ -146,7 +146,7 @@ function pgnToPosition(moves){
             case /^[a-h]x/.test(move):
                 position = pawnTakes(position, move, isWhite);
                 break;
-            case /^N[a-h]\d$/.test(move):
+            case /^Nx?[a-h]\d$/.test(move):
                 position = moveKnight(position, move, isWhite);
                 break;
         }
