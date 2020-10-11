@@ -4,8 +4,8 @@ import { getOpeningStatsCondensed } from './chess/opening-stats-condensed';
 import { getMoveTrees } from './chess/move-tree';
 
 function getApiUrlForUser(userName){
-    const apiUrlBase = 'http://lichess.org/api/games/user/';
-    const queryParamBase = '?max=30&opening=true';
+    const apiUrlBase = 'https://lichess.org/api/games/user/';
+    const queryParamBase = '?max=30&opening=true&perfType=ultraBullet,bullet,blitz,rapid,classical';
     // return `${apiUrlBase}${encodeURIComponent(userName)}${queryParamBase}`;
     // for testing so not rate limited by lichess
     return '/assets/test1.pgn';
