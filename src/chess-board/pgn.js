@@ -180,25 +180,26 @@ function pgnToPosition(moves){
 
     moves.forEach((move) => {
         isWhite = !isWhite;
+        const cleanedMove = move.replace(/[+#]$/, '');
         switch(true){
-            case /^\w\d$/.test(move):
-                position = movePawn(position, move, isWhite);
+            case /^\w\d$/.test(cleanedMove):
+                position = movePawn(position, cleanedMove, isWhite);
                 break;
-            case /^[a-h]x/.test(move):
-                position = pawnTakes(position, move, isWhite);
+            case /^[a-h]x/.test(cleanedMove):
+                position = pawnTakes(position, cleanedMove, isWhite);
                 break;
-            case /^N[a-h]?x?[a-h]\d$/.test(move):
-                position = moveKnight(position, move, isWhite);
+            case /^N[a-h]?x?[a-h]\d$/.test(cleanedMove):
+                position = moveKnight(position, cleanedMove, isWhite);
                 break;
-            case /^B[a-h]?x?[a-h]\d$/.test(move):
-                position = moveBishop(position, move, isWhite);
+            case /^B[a-h]?x?[a-h]\d$/.test(cleanedMove):
+                position = moveBishop(position, cleanedMove, isWhite);
                 break;
-            case /^Qx?[a-h]\d$/.test(move):
+            case /^Qx?[a-h]\d$/.test(cleanedMove):
                 // TODO: this will not work if there are multiple queens
-                position = moveSinglePiece(position, move, isWhite, QUEEN);
+                position = moveSinglePiece(position, cleanedMove, isWhite, QUEEN);
                 break;
-            case /^Kx?[a-h]\d$/.test(move):
-                position = moveSinglePiece(position, move, isWhite, KING);
+            case /^Kx?[a-h]\d$/.test(cleanedMove):
+                position = moveSinglePiece(position, cleanedMove, isWhite, KING);
                 break;
         }
     });

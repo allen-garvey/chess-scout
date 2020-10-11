@@ -239,3 +239,29 @@ test('PGN module #pgnToPosition moves queens correctly', t => {
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
     ]);
 });
+
+test('PGN module #pgnToPosition returns correct position when there are checks', t => {
+    t.deepEqual(pgn.pgnToPosition(['d4', 'Nf6', 'c4', 'e6', 'Nf3', 'Bb4+']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', '00', '00', 'bR'],
+        ['bP', 'bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', 'bP', 'bN', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', 'bB', 'wP', 'wP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', 'wN', '00', '00'],
+        ['wP', 'wP', '00', '00', 'wP', 'wP', 'wP', 'wP'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', '00', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition returns correct position when there is checkmate', t => {
+    t.deepEqual(pgn.pgnToPosition(['g4',  'e5',  'f3',  'Qh4']), [
+        ['bR', 'bN', 'bB', '00', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', 'bP', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'wP', 'bQ'],
+        ['00', '00', '00', '00', '00', 'wP', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', '00', '00', 'wP'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
