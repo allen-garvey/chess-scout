@@ -265,3 +265,27 @@ test('PGN module #pgnToPosition returns correct position when there is checkmate
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
     ]);
 });
+
+test('PGN module #pgnToPosition short castles correctly', t => {
+    t.deepEqual(pgn.pgnToPosition(['Nf3', 'd5', 'g3', 'c5', 'Bg2', 'Nc6', 'O-O']), [
+        ['bR', '00', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', '00', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', 'bN', '00', '00', '00', '00', '00'],
+        ['00', '00', 'bP', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', 'wN', 'wP', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wB', 'wP'],
+        ['wR', 'wN', 'wB', 'wQ', '00', 'wR', 'wK', '00'],
+    ]);
+
+    t.deepEqual(pgn.pgnToPosition(['d4', 'Nf6', 'c4', 'e6', 'Nc3', 'Bb4', 'Qc2', 'O-O']), [
+        ['bR', 'bN', 'bB', 'bQ', '00', 'bR', 'bK', '00'],
+        ['bP', 'bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', 'bP', 'bN', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', 'bB', 'wP', 'wP', '00', '00', '00', '00'],
+        ['00', '00', 'wN', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wQ', '00', 'wP', 'wP', 'wP', 'wP'],
+        ['wR', '00', 'wB', '00', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});

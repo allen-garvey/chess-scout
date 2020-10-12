@@ -1,3 +1,5 @@
+import { coral } from "color-name";
+
 const BLACK = 'b';
 const WHITE = 'w';
 const EMPTY_CELL = '00';
@@ -6,6 +8,7 @@ const KNIGHT = 'N';
 const BISHOP = 'B';
 const QUEEN = 'Q';
 const KING = 'K';
+const ROOK = 'R';
 
 function getStartingPostion(){
     return [
@@ -174,6 +177,18 @@ function pawnTakes(position, move, isWhite){
     return newPosition;
 }
 
+function shortCastle(position, isWhite){
+    const color = isWhite ? WHITE : BLACK;
+    const row = isWhite ? 7 : 0;
+    const newPosition = copyPosition(position);
+    newPosition[row][4] = EMPTY_CELL;
+    newPosition[row][7] = EMPTY_CELL;
+    newPosition[row][5] = `${color}${ROOK}`;
+    newPosition[row][6] = `${color}${KING}`;
+
+    return newPosition;
+}
+
 function pgnToPosition(moves){
     let position = getStartingPostion();
     let isWhite = false;
@@ -200,6 +215,9 @@ function pgnToPosition(moves){
                 break;
             case /^Kx?[a-h]\d$/.test(cleanedMove):
                 position = moveSinglePiece(position, cleanedMove, isWhite, KING);
+                break;
+            case move === 'O-O':
+                position = shortCastle(position, isWhite);
                 break;
         }
     });
