@@ -189,6 +189,18 @@ function shortCastle(position, isWhite){
     return newPosition;
 }
 
+function longCastle(position, isWhite){
+    const color = isWhite ? WHITE : BLACK;
+    const row = isWhite ? 7 : 0;
+    const newPosition = copyPosition(position);
+    newPosition[row][0] = EMPTY_CELL;
+    newPosition[row][4] = EMPTY_CELL;
+    newPosition[row][3] = `${color}${ROOK}`;
+    newPosition[row][2] = `${color}${KING}`;
+
+    return newPosition;
+}
+
 function pgnToPosition(moves){
     let position = getStartingPostion();
     let isWhite = false;
@@ -219,6 +231,9 @@ function pgnToPosition(moves){
             case move === 'O-O':
                 position = shortCastle(position, isWhite);
                 break;
+            case move === 'O-O-O':
+                    position = longCastle(position, isWhite);
+                    break;
         }
     });
 

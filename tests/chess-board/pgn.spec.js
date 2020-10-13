@@ -289,3 +289,27 @@ test('PGN module #pgnToPosition short castles correctly', t => {
         ['wR', '00', 'wB', '00', 'wK', 'wB', 'wN', 'wR'],
     ]);
 });
+
+test('PGN module #pgnToPosition long castles correctly', t => {
+    t.deepEqual(pgn.pgnToPosition(['d4', 'd5', 'Bf4', 'Nc6', 'Nc3', 'Nf6', 'Qd2', 'Bf5', 'O-O-O']), [
+        ['bR', '00', '00', 'bQ', 'bK', 'bB', '00', 'bR'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', 'bN', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', 'bB', '00', '00'],
+        ['00', '00', '00', 'wP', '00', 'wB', '00', '00'],
+        ['00', '00', 'wN', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wQ', 'wP', 'wP', 'wP', 'wP'],
+        ['00', '00', 'wK', 'wR', '00', 'wB', 'wN', 'wR'],
+    ]);
+
+    t.deepEqual(pgn.pgnToPosition(['d4', 'd5', 'Nf3', 'Bf5', 'e3', 'Qd7', 'Nc3', 'Nc6', 'Be2', 'O-O-O']), [
+        ['00', '00', 'bK', 'bR', '00', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', 'bQ', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', 'bN', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', 'bP', '00', 'bB', '00', '00'],
+        ['00', '00', '00', 'wP', '00', '00', '00', '00'],
+        ['00', '00', 'wN', '00', 'wP', 'wN', '00', '00'],
+        ['wP', 'wP', 'wP', '00', 'wB', 'wP', 'wP', 'wP'],
+        ['wR', '00', 'wB', 'wQ', 'wK', '00', '00', 'wR'],
+    ]);
+});
