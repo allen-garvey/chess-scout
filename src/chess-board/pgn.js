@@ -263,6 +263,21 @@ function pawnTakes(position, move, isWhite){
     return newPosition;
 }
 
+function pawnPromotes(position, move, isWhite){
+    const column = getColumn(move[move.length - 4]);
+    const row = getRow(move[move.length - 3]);
+    const color = isWhite ? WHITE : BLACK;
+    const newPosition = copyPosition(position);
+    const piece = `${color}${move[move.length - 1]}`;
+    newPosition[row][column] = piece;
+    
+    const columnFrom = getColumn(move[0]);
+    const rowFrom = isWhite ? 1 : 6;
+    newPosition[rowFrom][columnFrom] = EMPTY_CELL;
+
+    return newPosition;
+}
+
 function shortCastle(position, isWhite){
     const color = isWhite ? WHITE : BLACK;
     const row = isWhite ? 7 : 0;
@@ -297,6 +312,9 @@ function pgnToPosition(moves){
         switch(true){
             case /^\w\d$/.test(cleanedMove):
                 position = movePawn(position, cleanedMove, isWhite);
+                break;
+            case /=.$/.test(cleanedMove):
+                position = pawnPromotes(position, cleanedMove, isWhite);
                 break;
             case /^[a-h]x/.test(cleanedMove):
                 position = pawnTakes(position, cleanedMove, isWhite);

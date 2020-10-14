@@ -352,3 +352,118 @@ test('PGN module #pgnToPosition moves rooks when row is specified', t => {
         ['00', '00', '00', '00', '00', '00', '00', '00'],
     ]);
 });
+
+test('PGN module #pgnToPosition pawn promotes to Queen', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'g4', 'hxg4', 'h5', 'd5', 'h6', 'Nf6', 'h7', 'Rg8', 'h8=Q']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bR', 'wQ'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', '00'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'bP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', '00', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'Nf3', 'g5', 'hxg5', 'h4', 'g3', 'h3', 'Rg1', 'h2', 'Bg2', 'h1=Q']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'wP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', 'wN', 'wP', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wB', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', '00', 'wR', 'bQ'],
+    ]);
+});
+
+test('PGN module #pgnToPosition pawn promotes to Queen by capture', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'g4', 'hxg4', 'h5', 'd5', 'h6', 'Nf6', 'h7', 'Rg8', 'hxg8=Q']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'wQ', '00'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', '00'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'bP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', '00', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition pawn promotes to Knight', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'g4', 'hxg4', 'h5', 'd5', 'h6', 'Nf6', 'h7', 'Rg8', 'h8=N']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bR', 'wN'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', '00'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'bP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', '00', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition pawn promotes to Knight by capture', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'g4', 'hxg4', 'h5', 'd5', 'h6', 'Nf6', 'h7', 'Rg8', 'hxg8=N']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'wN', '00'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', '00'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'bP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', '00', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition pawn promotes to Bishop', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'g4', 'hxg4', 'h5', 'd5', 'h6', 'Nf6', 'h7', 'Rg8', 'h8=B']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bR', 'wB'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', '00'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'bP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', '00', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition pawn promotes to Bishop by capture', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'g4', 'hxg4', 'h5', 'd5', 'h6', 'Nf6', 'h7', 'Rg8', 'hxg8=B']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'wB', '00'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', '00'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'bP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', '00', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition pawn promotes to Rook', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'g4', 'hxg4', 'h5', 'd5', 'h6', 'Nf6', 'h7', 'Rg8', 'h8=R']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bR', 'wR'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', '00'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'bP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', '00', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition pawn promotes to Rook by capture', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'h5', 'g4', 'hxg4', 'h5', 'd5', 'h6', 'Nf6', 'h7', 'Rg8', 'hxg8=R']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'wR', '00'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', '00'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', 'bP', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', 'bP', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', '00', '00'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
