@@ -86,6 +86,66 @@ function findPieces(position, piece){
     return ret;
 }
 
+function findRooks(position, column, row, color){
+    const ret = [];
+    const rowTest = position[row];
+    const pieceToLookFor = `${color}${ROOK}`;
+    for(let x=column+1;x<rowTest.length;x++){
+        const piece = rowTest[x];
+        if(piece === pieceToLookFor){
+            ret.push({
+                x,
+                y: row
+            });
+            break;
+        }
+        else if(piece !== EMPTY_CELL){
+            break;
+        }
+    }
+    for(let x=column-1;x>=0;x--){
+        const piece = rowTest[x];
+        if(piece === pieceToLookFor){
+            ret.push({
+                x,
+                y: row
+            });
+            break;
+        }
+        else if(piece !== EMPTY_CELL){
+            break;
+        }
+    }
+    for(let y=row+1;y<position.length;y++){
+        const piece = position[y][column];
+        if(piece === pieceToLookFor){
+            ret.push({
+                x: column,
+                y
+            });
+            break;
+        }
+        else if(piece !== EMPTY_CELL){
+            break;
+        }
+    }
+    for(let y=row-1;y>=0;y--){
+        const piece = position[y][column];
+        if(piece === pieceToLookFor){
+            ret.push({
+                x: column,
+                y
+            });
+            break;
+        }
+        else if(piece !== EMPTY_CELL){
+            break;
+        }
+    }
+
+    return ret;
+}
+
 function moveKnight(position, move, isWhite){
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
@@ -123,6 +183,32 @@ function moveBishop(position, move, isWhite){
     for(let i=0;i<foundPieces.length;i++){
         const coordinate = foundPieces[i];
         if((movedPieceColumn === false || movedPieceColumn === coordinate.x) && (piecePolarity === getPolarity(coordinate.x, coordinate.y))){
+            newPosition[coordinate.y][coordinate.x] = EMPTY_CELL;
+            break;
+        }
+    }
+    
+    return newPosition;
+}
+
+function moveRook(position, move, isWhite){
+    const column = getColumn(move[move.length - 2]);
+    const row = getRow(move[move.length - 1]);
+    const color = isWhite ? WHITE : BLACK;
+    const piece = `${color}${ROOK}`;
+    const movedPieceColumn = move.length >= 4 && /^[a-h]$/.test(move[1]) ? getColumn(move[1]) : false;
+    const movedPieceRow = move.length >= 4 && /^[1-8]$/.test(move[1]) ? getColumn(move[1]) : false;
+    const foundPieces = findRooks(position, column, row, color);
+    const newPosition = copyPosition(position);
+    newPosition[row][column] = piece;
+
+    for(let i=0;i<foundPieces.length;i++){
+        const coordinate = foundPieces[i];
+        if(
+            (movedPieceColumn === false || movedPieceColumn === coordinate.x) && 
+            (movedPieceRow === false || movedPieceRow === coordinate.y) &&
+            (coordinate.x === column || coordinate.y === row)
+        ){
             newPosition[coordinate.y][coordinate.x] = EMPTY_CELL;
             break;
         }
@@ -220,6 +306,9 @@ function pgnToPosition(moves){
                 break;
             case /^B[a-h]?x?[a-h]\d$/.test(cleanedMove):
                 position = moveBishop(position, cleanedMove, isWhite);
+                break;
+            case /^R[a-h1-8]?x?[a-h]\d$/.test(cleanedMove):
+                position = moveRook(position, cleanedMove, isWhite);
                 break;
             case /^Qx?[a-h]\d$/.test(cleanedMove):
                 // TODO: this will not work if there are multiple queens

@@ -313,3 +313,16 @@ test('PGN module #pgnToPosition long castles correctly', t => {
         ['wR', '00', 'wB', 'wQ', 'wK', '00', '00', 'wR'],
     ]);
 });
+
+test('PGN module #pgnToPosition moves rooks correctly', t => {
+    t.deepEqual(pgn.pgnToPosition(['Nf3', 'Nf6', 'Rg1', 'Rg8']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bR', '00'],
+        ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', 'bN', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', 'wN', '00', '00'],
+        ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wR', '00'],
+    ]);
+});
