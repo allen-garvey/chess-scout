@@ -197,7 +197,7 @@ function moveRook(position, move, isWhite){
     const color = isWhite ? WHITE : BLACK;
     const piece = `${color}${ROOK}`;
     const movedPieceColumn = move.length >= 4 && /^[a-h]$/.test(move[1]) ? getColumn(move[1]) : false;
-    const movedPieceRow = move.length >= 4 && /^[1-8]$/.test(move[1]) ? getColumn(move[1]) : false;
+    const movedPieceRow = move.length >= 4 && /^[1-8]$/.test(move[1]) ? getRow(move[1]) : false;
     const foundPieces = findRooks(position, column, row, color);
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;

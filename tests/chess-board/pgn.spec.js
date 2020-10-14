@@ -326,3 +326,29 @@ test('PGN module #pgnToPosition moves rooks correctly', t => {
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wR', '00'],
     ]);
 });
+
+test('PGN module #pgnToPosition moves rooks when column is specified', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4', 'e6', 'd4', 'd6', 'Bc4', 'f6', 'Nf3', 'g6', 'Nc3', 'c6', 'Be3', 'b6', 'Qd2', 'h6', 'Ke2', 'a6', 'Rhb1']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', 'wB', 'wP', 'wP', '00', '00', '00'],
+        ['00', '00', 'wN', '00', 'wB', 'wN', '00', '00'],
+        ['wP', 'wP', 'wP', 'wQ', 'wK', 'wP', 'wP', 'wP'],
+        ['wR', 'wR', '00', '00', '00', '00', '00', '00'],
+    ]);
+});
+
+test('PGN module #pgnToPosition moves rooks when row is specified', t => {
+    t.deepEqual(pgn.pgnToPosition(['h4', 'e6', 'Nf3', 'f6', 'e4', 'd6', 'Be2', 'g6', 'd4', 'c6', 'Be3', 'b6', 'Qd3', 'a6', 'Nc3', 'h6', 'Kd2', 'Ra7', 'Rh3', 'Rhh7', 'Rah1', 'Ne7', 'R1h2']), [
+        ['00', 'bN', 'bB', 'bQ', 'bK', 'bB', '00', '00'],
+        ['bR', '00', '00', '00', 'bN', '00', '00', 'bR'],
+        ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', 'wP', 'wP', '00', '00', 'wP'],
+        ['00', '00', 'wN', 'wQ', 'wB', 'wN', '00', 'wR'],
+        ['wP', 'wP', 'wP', 'wK', 'wB', 'wP', 'wP', 'wR'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+    ]);
+});
