@@ -7,10 +7,10 @@
                 <li 
                     v-for="(moveArray, index) in stat" 
                     :key="index" 
-                    class="stat-item"
+                    :class="$style['stat-item']"
                 >
-                    <h5 class="stat-title">{{moveArray[0]}} ({{moveArray[1].games}})</h5>
-                    <dl class="stat-percentages">
+                    <h5 :class="$style['stat-title']">{{moveArray[0]}} ({{moveArray[1].games}})</h5>
+                    <dl :class="$style['stat-percentages']">
                         <dt>Wins</dt>
                         <dd>{{calculatePercentage(moveArray[1].wins, moveArray[1].games)}}%</dd>
                         <dt>Draws</dt>
@@ -23,6 +23,26 @@
         </div>
     </div>
 </template>
+
+<style lang="scss" module>
+.stat-item{
+    display: flex;
+    margin-bottom: 1rem;
+}
+.stat-title{
+    margin: 0 2rem 0 0;
+    min-width: 6em;
+}
+
+.stat-percentages{
+    margin: 0;
+    display: flex;
+
+    dd{
+        margin: 0 2em 0 0.5em;
+    }
+}
+</style>
 
 <script>
 export default {

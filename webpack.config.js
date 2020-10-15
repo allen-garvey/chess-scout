@@ -24,17 +24,37 @@ module.exports = {
         rules: [
             {
                 test: /\.scss$/,
-                use: [
+                oneOf: [
+                    // this matches `<style module>`
                     {
-                        loader: MiniCssExtractPlugin.loader,
+                        resourceQuery: /module/,
+                        use: [
+                            'vue-style-loader',
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    esModule: false,
+                                    modules: {
+                                        localIdentName: '[local]_[hash:base64:8]',
+                                    },
+                                }
+                            },
+                            {
+                                loader: 'sass-loader',
+                            },
+                        ]
                     },
                     {
-                        loader: 'css-loader',
+                        use: [
+                            'vue-style-loader',
+                            {
+                                loader: MiniCssExtractPlugin.loader,
+                            },
+                            'css-loader',
+                            'sass-loader',
+                        ]
                     },
-                    {
-                        loader: 'sass-loader',
-                    },
-                ]
+                ],
             },
             {
                 test: /\.vue$/,
