@@ -1,5 +1,5 @@
 <template>
-    <div class="stats-container">
+    <div>
         <h3>{{title}}</h3>
         <div v-for="(stat, color) in stats" :key="color">
             <h4>{{color}}</h4>
