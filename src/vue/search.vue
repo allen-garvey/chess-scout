@@ -21,7 +21,8 @@ export default {
     },
     methods: {
         submitAction(){
-            this.$emit('form-submitted', this.userNameInput);
+            const userName = this.userNameInput;
+            this.$router.push({ name: 'userShow', params: { userName }});
         },
     }
 };

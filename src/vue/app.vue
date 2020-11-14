@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <router-view @form-submitted="onFormSubmitted"/>
+        <router-view />
     </div>
 </template>
 
@@ -15,9 +15,6 @@ export default {
     computed: {
     },
     methods: {
-        onFormSubmitted(userName){
-            this.$router.push({ name: 'userShow', params: { userName }});
-        },
     }
 };
 </script>

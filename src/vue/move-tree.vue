@@ -75,7 +75,7 @@ export default {
     watch: {
         path: {
             handler(){
-                this.$emit('tree-updated', this.path);
+                this.$emit('treeUpdated', this.path);
             },
             deep: true,
         }

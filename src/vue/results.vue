@@ -5,13 +5,13 @@
         <move-tree
             title="White"
             :tree="userGamesStats.moveTrees.white"
-            @tree-updated="moveTreeUpdated"
+            @treeUpdated="moveTreeUpdated"
         >
         </move-tree>
         <move-tree
             title="Black"
             :tree="userGamesStats.moveTrees.black"
-            @tree-updated="moveTreeUpdated"
+            @treeUpdated="moveTreeUpdated"
         >
         </move-tree>
         <stats
