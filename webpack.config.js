@@ -19,6 +19,7 @@ module.exports = {
         historyApiFallback: {
             index: 'index.html'
         },
+        open: true,
     },
     module: {
         rules: [
