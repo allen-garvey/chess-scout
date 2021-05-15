@@ -8,7 +8,7 @@ function getApiUrlForUser(userName){
     const queryParamBase = '?max=30&opening=true&perfType=ultraBullet,bullet,blitz,rapid,classical';
     // return `${apiUrlBase}${encodeURIComponent(userName)}${queryParamBase}`;
     // for testing so not rate limited by lichess
-    return '/assets/test1.pgn';
+    return '/assets/lichess_HAI52_2021-04-04.pgn';
 }
 
 export function getUserGamesStats(userName){
