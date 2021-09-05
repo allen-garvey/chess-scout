@@ -13,13 +13,21 @@ module.exports = {
         path: path.resolve(__dirname, 'public/assets'),
     },
     devServer: {
-        contentBase: path.join(__dirname, 'public'),
-        publicPath: 'http://localhost:3000/assets/',
+        static: {
+            directory: path.join(__dirname, 'public'),
+            watch: true,
+        },
+        devMiddleware: {
+            publicPath: '/assets/'
+        },
         port: 3000,
         historyApiFallback: {
             index: 'index.html'
         },
         open: true,
+        client: {
+            overlay: {},
+        },
     },
     module: {
         rules: [
