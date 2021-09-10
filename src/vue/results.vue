@@ -1,5 +1,5 @@
 <template>
-    <div class="results-container" v-if="userGamesStats">
+    <div class="container" v-if="userGamesStats">
         <h2>Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h2>
         <chess-board :moves="moves"></chess-board>
         <move-tree
