@@ -8,27 +8,40 @@
                     v-for="(childKey, index) in children" 
                     :key="index" 
                     :class="$style.statItem"
-                    @click="childClicked(childKey)"
                 >
-                    <h5 :class="$style.statTitle">
-                        <span>{{ childKey }} {{ ' ' }}</span> 
-                        <span :class="$style.gamesCount">{{ getChild(childKey).games }} games </span> 
-                        <span :class="$style.gamesCountPercentage">{{ calculatePercentage(getChild(childKey).games, totalGames) }}%</span>
-                    </h5>
-                    <dl :class="$style.statPercentages">
-                        <dt>Wins</dt>
-                        <dd>
-                            {{calculatePercentage(getChild(childKey).results.wins, getChild(childKey).games)}}%
-                        </dd>
-                        <dt>Draws</dt>
-                        <dd>
-                            {{calculatePercentage(getChild(childKey).results.draws, getChild(childKey).games)}}%
-                        </dd>
-                        <dt>Losses</dt>
-                        <dd>
-                            {{calculatePercentage(getChild(childKey).results.losses, getChild(childKey).games)}}%
-                        </dd>
-                    </dl>
+                    <div :class="$style.clickable" @click="childClicked(childKey)">
+                        <h5 :class="$style.statTitle">
+                            <span>{{ childKey }} {{ ' ' }}</span> 
+                            <span :class="$style.gamesCount">{{ getChild(childKey).games.length }} games </span> 
+                            <span :class="$style.gamesCountPercentage">{{ calculatePercentage(getChild(childKey).games.length, totalGames) }}%</span>
+                        </h5>
+                        <dl :class="$style.statPercentages">
+                            <dt>Wins</dt>
+                            <dd>
+                                {{calculatePercentage(getChild(childKey).results.wins, getChild(childKey).games.length)}}%
+                            </dd>
+                            <dt>Draws</dt>
+                            <dd>
+                                {{calculatePercentage(getChild(childKey).results.draws, getChild(childKey).games.length)}}%
+                            </dd>
+                            <dt>Losses</dt>
+                            <dd>
+                                {{calculatePercentage(getChild(childKey).results.losses, getChild(childKey).games.length)}}%
+                            </dd>
+                        </dl>
+                    </div>
+                    <ul 
+                        :class="$style.gameLinksList"
+                        v-if="getChild(childKey).games.length <= 4"
+                    >
+                        <li 
+                            :class="$style.gameLinkItem"
+                            v-for="gameUrl in getChild(childKey).games" 
+                            :key="gameUrl"
+                        >
+                            <a :href="gameUrl" target="_blank" rel="noopener noreferrer">{{ gameUrl.replace(/^https?:\/\/(www.)?/, '') }}</a>
+                        </li>
+                    </ul>
                 </li>
             </ol>
         </div>
@@ -36,6 +49,9 @@
 </template>
 
 <style lang="scss" module>
+    .clickable {
+        cursor: pointer;
+    }
     .title {
         font-size: 1.25rem;
     }
@@ -51,16 +67,25 @@
     }
 
     .statItem {
-        margin: 0;
+        margin: 1rem 0 0;
     }
 
     .statPercentages {
         display: flex;
-        margin: 0 0 1rem;
+        margin: 0 0 0.25rem;
 
         dd {
             margin: 0 1em 0 0.25em;
         }
+    }
+
+    .gameLinksList {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+    }
+    .gameLinkItem {
+        margin: 0 1em 0 0;
     }
 </style>
 
@@ -102,10 +127,10 @@ export default {
             return ret;
         },
         totalGames(){
-            return Object.keys(this.currentNode.children).reduce((total, key) => total + this.currentNode.children[key].games, 0);
+            return Object.keys(this.currentNode.children).reduce((total, key) => total + this.currentNode.children[key].games.length, 0);
         },
         children(){
-            return Object.keys(this.currentNode.children).sort((key1, key2) => this.currentNode.children[key2].games - this.currentNode.children[key1].games);
+            return Object.keys(this.currentNode.children).sort((key1, key2) => this.currentNode.children[key2].games.length - this.currentNode.children[key1].games.length);
         },
     },
     watch: {

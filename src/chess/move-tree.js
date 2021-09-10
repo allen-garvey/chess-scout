@@ -15,7 +15,7 @@ function createNode(){
             draws: 0,
             losses: 0,
         },
-        games: 0,
+        games: [],
         children: {},
     };
 }
@@ -29,7 +29,7 @@ function getMoveTreesForColor(games, playerName, color, moveDepth){
         if(header[color] !== playerName){
             return;
         }
-        root.games += 1;
+        root.games.push[header.Site];
         let currentNode = root;
         const moves = game.moves.flat();
         const limit = Math.min(max, moves.length - 1);
@@ -43,7 +43,7 @@ function getMoveTreesForColor(games, playerName, color, moveDepth){
             currentNode.children[key].results.wins += result.wins;
             currentNode.children[key].results.draws += result.draws;
             currentNode.children[key].results.losses += result.losses;
-            currentNode.children[key].games += 1;
+            currentNode.children[key].games.push(header.Site);
 
             currentNode = currentNode.children[key];
         }
