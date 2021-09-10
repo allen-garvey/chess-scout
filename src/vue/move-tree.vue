@@ -1,17 +1,21 @@
 <template>
     <div class="stats-container">
         <div>
-            <h4>{{title}}{{treeTitle}}</h4>
+            <h4 :class="$style.title">{{title}}{{treeTitle}}</h4>
             <button v-if="!isRoot" @click="resetTree()">Reset</button>
             <ol>
                 <li 
                     v-for="(childKey, index) in children" 
                     :key="index" 
-                    class="stat-item"
+                    :class="$style.statItem"
                     @click="childClicked(childKey)"
                 >
-                    <h5 class="stat-title">{{childKey}} ({{getChild(childKey).games}})</h5>
-                    <dl class="stat-percentages">
+                    <h5 :class="$style.statTitle">
+                        <span>{{ childKey }} {{ ' ' }}</span> 
+                        <span :class="$style.gamesCount">{{ getChild(childKey).games }} games </span> 
+                        <span :class="$style.gamesCountPercentage">{{ calculatePercentage(getChild(childKey).games, totalGames) }}%</span>
+                    </h5>
+                    <dl :class="$style.statPercentages">
                         <dt>Wins</dt>
                         <dd>
                             {{calculatePercentage(getChild(childKey).results.wins, getChild(childKey).games)}}%
@@ -30,6 +34,35 @@
         </div>
     </div>
 </template>
+
+<style lang="scss" module>
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .statTitle {
+        font-size: 1rem;
+        margin: 0 0 0.5rem;
+    }
+
+    .gamesCount, .gamesCountPercentage {
+        font-weight: normal;
+        margin-left: 1rem;
+    }
+
+    .statItem {
+        margin: 0;
+    }
+
+    .statPercentages {
+        display: flex;
+        margin: 0 0 1rem;
+
+        dd {
+            margin: 0 1em 0 0.25em;
+        }
+    }
+</style>
 
 <script>
 export default {
@@ -67,6 +100,9 @@ export default {
                 ret += `${move} `;
             });
             return ret;
+        },
+        totalGames(){
+            return Object.keys(this.currentNode.children).reduce((total, key) => total + this.currentNode.children[key].games, 0);
         },
         children(){
             return Object.keys(this.currentNode.children).sort((key1, key2) => this.currentNode.children[key2].games - this.currentNode.children[key1].games);
