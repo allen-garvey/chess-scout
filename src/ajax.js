@@ -1,6 +1,4 @@
 import { parsePgn } from './chess/pgn-parser';
-import { getOpeningStats, getFirstMoveStats } from './chess/stats';
-import { getOpeningStatsCondensed } from './chess/opening-stats-condensed';
 import { getMoveTrees } from './chess/move-tree';
 
 function getApiUrlForUser(userName){
@@ -19,11 +17,7 @@ export function getUserGamesStats(userName){
         return res.text();
     }).then((text)=>{
         const games = parsePgn(text);
-        const openingStats = getOpeningStats(games, userName);
         return {
-            openingStats,
-            openingStatsCondensed: getOpeningStatsCondensed(openingStats),
-            firstMoveStats: getFirstMoveStats(games, userName),
             moveTrees: getMoveTrees(games, userName),
         };
     });

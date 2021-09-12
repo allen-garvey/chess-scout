@@ -14,26 +14,10 @@
             @treeUpdated="moveTreeUpdated"
         >
         </move-tree>
-        <stats
-            title="First Move Stats"
-            :stats="userGamesStats.firstMoveStats"
-        >
-        </stats>
-        <stats
-            title="Opening Stats Condensed"
-            :stats="userGamesStats.openingStatsCondensed"
-        >
-        </stats>
-        <stats
-            title="Opening Stats"
-            :stats="userGamesStats.openingStats"
-        >
-        </stats>
     </div>
 </template>
 
 <script>
-import Stats from './stats.vue';
 import MoveTree from './move-tree.vue';
 import ChessBoard from './chess-board.vue';
 import { getUserGamesStats } from '../ajax';
@@ -46,7 +30,6 @@ export default {
         },
     },
     components: {
-        Stats,
         MoveTree,
         ChessBoard,
     },
