@@ -5,13 +5,15 @@
         <move-tree
             title="White"
             :tree="userGamesStats.moveTrees.white"
-            @treeUpdated="moveTreeUpdated"
+            @treeUpdated="(moves) => moveTreeUpdated(moves, true)"
+            v-if="isWhiteSelected === true || isWhiteSelected === null"
         >
         </move-tree>
         <move-tree
             title="Black"
             :tree="userGamesStats.moveTrees.black"
-            @treeUpdated="moveTreeUpdated"
+            @treeUpdated="(moves) => moveTreeUpdated(moves, false)"
+            v-if="isWhiteSelected === false || isWhiteSelected === null"
         >
         </move-tree>
     </div>
@@ -43,6 +45,7 @@ export default {
         return {
             userGamesStats: null,
             moves: [],
+            isWhiteSelected: null,
         };
     },
     computed: {
@@ -56,8 +59,14 @@ export default {
         urlForUser(userName){
             return `https://lichess.org/@/${encodeURIComponent(userName)}`;
         },
-        moveTreeUpdated(moves){
+        moveTreeUpdated(moves, isWhite){
             this.moves = moves;
+            if(moves.length === 0){
+                this.isWhiteSelected = null;
+            }
+            else{
+                this.isWhiteSelected = isWhite;
+            }
         },
     }
 };
