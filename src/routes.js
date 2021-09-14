@@ -12,7 +12,13 @@ export default {
             path: '/u/:userName',
             name: 'userShow',
             component: ResultsView,
-            props: true,
+            props: (route) => {
+                const props = {
+                    userName: route.params.userName,
+                    gameTypes: route.query.gameTypes,
+                }; 
+                return props;
+            },
         }
     ],
 };

@@ -1,9 +1,9 @@
 import { parsePgn } from './chess/pgn-parser';
 import { getMoveTrees } from './chess/move-tree';
 
-function getApiUrlForUser(userName){
+function getApiUrlForUser(userName, gameTypes){
     const apiUrlBase = 'https://lichess.org/api/games/user/';
-    const queryParamBase = '?max=30&opening=true&perfType=ultraBullet,bullet,blitz,rapid,classical';
+    const queryParamBase = `?max=40&opening=true&perfType=${gameTypes}`;
     // return `${apiUrlBase}${encodeURIComponent(userName)}${queryParamBase}`;
     // for testing so not rate limited by lichess
     return `/assets/${userName}.pgn`;

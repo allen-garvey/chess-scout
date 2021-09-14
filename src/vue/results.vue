@@ -30,6 +30,10 @@ export default {
             type: String,
             required: true,
         },
+        gameTypes: {
+            type: String,
+            default: '',
+        },
     },
     components: {
         MoveTree,
@@ -52,7 +56,7 @@ export default {
     },
     methods: {
         loadUserGames(){
-            getUserGamesStats(this.userName).then((stats)=>{
+            getUserGamesStats(this.userName, this.gameTypes).then((stats)=>{
                 this.userGamesStats = stats;
             });
         },
