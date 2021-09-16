@@ -1,9 +1,9 @@
 <template>
-    <div class="stats-container">
+    <div :class="$style.container">
         <div>
             <h4 :class="$style.title">{{title}}{{treeTitle}}</h4>
             <button v-if="!isRoot" @click="resetTree()">Reset</button>
-            <ol>
+            <ol :class="$style.moveList">
                 <li 
                     v-for="(childKey, index) in children" 
                     :key="index" 
@@ -49,11 +49,30 @@
 </template>
 
 <style lang="scss" module>
+    .container {
+        margin: 0 0 4rem;
+    }
+
+    button {
+        cursor: pointer;
+        margin: 0 0 1rem;
+    }
+
     .clickable {
         cursor: pointer;
+
+        &:hover {
+            background-color: #d1eeff;
+        }
     }
     .title {
         font-size: 1.25rem;
+        margin: 0 0 0.7rem;
+    }
+
+    .moveList {
+        padding-left: 1.25em;
+        margin: 0;
     }
 
     .statTitle {
@@ -67,7 +86,7 @@
     }
 
     .statItem {
-        margin: 1rem 0 0;
+        margin: 0 0 1rem;
     }
 
     .statPercentages {
@@ -81,6 +100,7 @@
 
     .gameLinksList {
         display: flex;
+        flex-wrap: wrap;
         list-style-type: none;
         padding: 0;
     }
