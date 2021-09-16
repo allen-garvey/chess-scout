@@ -1,5 +1,5 @@
 <template>
-    <div class="search-container">
+    <div class="container">
         <form @submit.prevent="submitAction()">
             <label>Lichess User Name<input type="search" v-model="userNameInput" v-focus /></label>
             <div>
