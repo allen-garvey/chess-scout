@@ -15,6 +15,12 @@
                             <span :class="$style.gamesCount">{{ getChild(childKey).games.length }} games </span> 
                             <span :class="$style.gamesCountPercentage">{{ calculatePercentage(getChild(childKey).games.length, totalGames) }}%</span>
                         </h5>
+                        <results-graph 
+                            :total="getChild(childKey).games.length"
+                            :wins="getChild(childKey).results.wins"
+                            :draws="getChild(childKey).results.draws"
+                            :losses="getChild(childKey).results.losses"
+                        />
                         <dl :class="$style.statPercentages">
                             <dt>Wins</dt>
                             <dd>
@@ -110,6 +116,8 @@
 </style>
 
 <script>
+import ResultsGraph from './results-graph.vue';
+
 export default {
     props: {
         title: {
@@ -120,6 +128,9 @@ export default {
             type: Object,
             required: true,
         },
+    },
+    components: {
+        ResultsGraph,
     },
     data(){
         return {
