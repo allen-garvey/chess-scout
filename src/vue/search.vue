@@ -14,35 +14,8 @@
 </template>
 
 <script>
+import gameTypes from '../game-types';
 import focus from './directives/focus';
-
-const gameTypes = [
-    {
-        title: 'Ultra Bullet',
-        key: 'ultraBullet',
-        isChecked: true,
-    },
-    {
-        title: 'Bullet',
-        key: 'bullet',
-        isChecked: true,
-    },
-    {
-        title: 'Blitz',
-        key: 'blitz',
-        isChecked: true,
-    },
-    {
-        title: 'Rapid',
-        key: 'rapid',
-        isChecked: true,
-    },
-    {
-        title: 'Classical',
-        key: 'classical',
-        isChecked: true,
-    },
-];
 
 export default {
     directives: {
