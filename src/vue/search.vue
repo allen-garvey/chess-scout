@@ -6,7 +6,7 @@
                 <input :class="[$style.button, 'btn',  'btn-primary']" type="submit" value="Submit" :disabled="!userNameInput" />
             </div>
             <div :class="$style.checkboxContainer">
-                <template v-for="gameType in gameTypes" :key="gameType.key">
+                <div v-for="gameType in gameTypes" :key="gameType.key">
                     <input 
                         :id="gameTypeId(gameType)"
                         type="checkbox"
@@ -14,7 +14,7 @@
                         v-model="gameType.isChecked" 
                     />
                     <label :class="$style.label" :for="gameTypeId(gameType)">{{ gameType.title }}</label>
-                </template>
+                </div>
             </div>
         </form>
     </div>
@@ -29,6 +29,8 @@
         margin-right: 1rem;
     }
     .checkboxContainer {
+        display: flex;
+        flex-wrap: wrap;
         margin: 0.5rem 0 0;
     }
     .label {
