@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <form @submit.prevent="submitAction()">
             <div :class="$style.searchContainer">
                 <label :class="$style.searchLabel">Lichess User Name<input type="search" class="form-control" v-model="userNameInput" v-focus /></label>

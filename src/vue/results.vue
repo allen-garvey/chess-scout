@@ -1,9 +1,10 @@
 <template>
-    <div class="container">
+    <div>
         <loader v-if="isLoading" />
-        <div v-if="userGamesStats">
+        <search :class="$style.search" v-if="isLoaded" />
+        <div v-if="isLoaded">
             <div :class="$style.header">
-                <h2 :class="$style.title">Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h2>
+                <h1 :class="$style.title">Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h1>
                 <div :class="$style.gameTypes" v-if="gameTypesTitle">{{ gameTypesTitle }}</div>
             </div>
             <div :class="$style.content">
@@ -28,6 +29,9 @@
 </template>
 
 <style lang="scss" module>
+    .search {
+        margin-bottom: 3rem;
+    }
     .title {
         margin: 0;
     }
@@ -35,7 +39,7 @@
         margin: 0.25rem 0 0;
     }
     .header {
-        margin: 0 0 2rem;
+        margin: 0 0 1rem;
     }
     .moveTrees {
         margin: 1.5rem 0 0;
@@ -57,6 +61,7 @@ import gameTypes from '../game-types';
 import MoveTree from './move-tree.vue';
 import ChessBoard from './chess-board.vue';
 import Loader from './loader.vue';
+import Search from './search.vue';
 import { getUserGamesStats } from '../ajax';
 
 export default {
@@ -71,6 +76,7 @@ export default {
         },
     },
     components: {
+        Search,
         MoveTree,
         ChessBoard,
         Loader,
@@ -90,6 +96,9 @@ export default {
         };
     },
     computed: {
+        isLoaded(){
+            return !this.isLoading && this.userGamesStats;
+        },
         gameTypesTitle(){
             return this.gameTypes.split(',')
             .map(key => {
