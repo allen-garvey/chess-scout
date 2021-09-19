@@ -1,7 +1,10 @@
 <template>
     <div class="container">
         <form @submit.prevent="submitAction()">
-            <label>Lichess User Name<input type="search" class="form-control" v-model="userNameInput" v-focus /></label>
+            <div :class="$style.searchContainer">
+                <label :class="$style.searchLabel">Lichess User Name<input type="search" class="form-control" v-model="userNameInput" v-focus /></label>
+                <input :class="[$style.button, 'btn',  'btn-primary']" type="submit" value="Submit" :disabled="!userNameInput" />
+            </div>
             <div :class="$style.checkboxContainer">
                 <template v-for="gameType in gameTypes" :key="gameType.key">
                     <input 
@@ -13,24 +16,32 @@
                     <label :class="$style.label" :for="gameTypeId(gameType)">{{ gameType.title }}</label>
                 </template>
             </div>
-            <div :class="$style.buttonContainer">
-                <input class="btn btn-primary" type="submit" value="Submit" :disabled="!userNameInput" />
-            </div>
         </form>
     </div>
 </template>
 
 <style lang="scss" module>
+    .searchContainer {
+        display: flex;
+    }
+    .searchLabel {
+        flex-grow: 1;
+        margin-right: 1rem;
+    }
     .checkboxContainer {
-        margin: 1rem 0 0.5rem;
+        margin: 0.5rem 0 0;
     }
     .label {
         cursor: pointer;
         margin-right: 0.5em;
     }
-    .buttonContainer {
-        display: flex;
-        justify-content: flex-end;
+    .button {
+        align-self: flex-end;
+        height: 100%;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
     }
 </style>
 
