@@ -3,6 +3,7 @@
         <div>
             <h4 :class="$style.title">{{title}}{{treeTitle}}</h4>
             <button v-if="!isRoot" @click="resetTree()">Reset</button>
+            <button :class="$style.copyButton" v-if="!isRoot" @click="copyPgn()">Copy PGN</button>
             <ol :class="$style.moveList">
                 <li 
                     v-for="(childKey, index) in children" 
@@ -62,6 +63,10 @@
     button {
         cursor: pointer;
         margin: 0 0 1rem;
+    }
+
+    .copyButton {
+        margin-left: 0.5rem;
     }
 
     .clickable {
@@ -186,6 +191,10 @@ export default {
         resetTree(){
             this.path = [];
             this.currentNode = this.tree;
+        },
+        copyPgn(){
+            const pgn = this.treeTitle.replace(/^ - /, '');
+            navigator.clipboard.writeText(pgn);
         },
     },
 };
