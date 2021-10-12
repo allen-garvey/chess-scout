@@ -519,3 +519,29 @@ test('PGN module #pgnToPosition multiple Queens vertical battery move', t => {
         ['00', '00', '00', 'bQ', 'wQ', 'wR', '00', 'wK'],
     ]);
 });
+
+test('PGN module #pgnToPosition multiple Queens horizontal battery move', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4','d5','Nc3','d4','f4','dxc3','Nf3','cxb2','Be2','bxa1=Q','O-O','Qxa2','Qe1','Qxc2','d4','Qxd4+','Kh1','Qcd2','Ba3','Q4b2','Rg1','Qxe2']), [
+        ['bR', 'bN', 'bB', '00', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', 'wP', 'wP', '00', '00'],
+        ['wB', '00', '00', '00', '00', 'wN', '00', '00'],
+        ['00', 'bQ', '00', '00', 'bQ', '00', 'wP', 'wP'],
+        ['00', '00', '00', '00', 'wQ', '00', 'wR', 'wK'],
+    ]);
+});
+
+test('PGN module #pgnToPosition multiple Queens diagonal battery move', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4','d5','Nc3','d4','f4','dxc3','Nf3','cxb2','Be2','bxa1=Q','O-O','Qxa2','Qe1','Qxc2','d4','Qxd4+','Kh1','Qcd2','Ba3','Q4b2','Rg1','Qbc3','h3','Qa5']), [
+        ['bR', 'bN', 'bB', '00', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['bQ', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', 'wP', 'wP', '00', '00'],
+        ['wB', '00', '00', '00', '00', 'wN', '00', 'wP'],
+        ['00', '00', '00', 'bQ', 'wB', '00', 'wP', '00'],
+        ['00', '00', '00', '00', 'wQ', '00', 'wR', 'wK'],
+    ]);
+});
