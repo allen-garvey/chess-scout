@@ -215,10 +215,10 @@ function moveRook(position, move, isWhite){
     return newPosition;
 }
 
-function moveSinglePiece(position, move, isWhite, pieceSymbol){
+function moveKing(position, move, isWhite){
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
-    const piece = `${isWhite ? WHITE : BLACK}${pieceSymbol}`;
+    const piece = `${isWhite ? WHITE : BLACK}${KING}`;
     const foundPiece = findPieces(position, piece)[0];
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;
@@ -406,7 +406,7 @@ function pgnToPosition(moves){
                 position = moveQueen(position, cleanedMove, isWhite);
                 break;
             case /^Kx?[a-h]\d$/.test(cleanedMove):
-                position = moveSinglePiece(position, cleanedMove, isWhite, KING);
+                position = moveKing(position, cleanedMove, isWhite);
                 break;
             case move === 'O-O':
                 position = shortCastle(position, isWhite);
