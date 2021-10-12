@@ -481,6 +481,32 @@ test('PGN module #pgnToPosition multiple Queens unambiguous move', t => {
     ]);
 });
 
+test('PGN module #pgnToPosition multiple Queens with specified column', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4','d5','Nc3','d4','f4','dxc3','Nf3','cxb2','Be2','bxa1=Q','O-O','Qxa2','Qe1','Qxc2','d4','Qxd4+','Kh1','Qcd2','Ba3']), [
+        ['bR', 'bN', 'bB', '00', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', 'bQ', 'wP', 'wP', '00', '00'],
+        ['wB', '00', '00', '00', '00', 'wN', '00', '00'],
+        ['00', '00', '00', 'bQ', 'wB', '00', 'wP', 'wP'],
+        ['00', '00', '00', '00', 'wQ', 'wR', '00', 'wK'],
+    ]);
+});
+
+test('PGN module #pgnToPosition multiple Queens with specified row', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4','d5','Nc3','d4','f4','dxc3','Nf3','cxb2','Be2','bxa1=Q','O-O','Qxa2','Qe1','Qxc2','d4','Qxd4+','Kh1','Qcd2','Ba3','Q4b2','Rg1','Qdb4','Qf1','Q2c3']), [
+        ['bR', 'bN', 'bB', '00', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', 'bQ', '00', '00', 'wP', 'wP', '00', '00'],
+        ['wB', '00', 'bQ', '00', '00', 'wN', '00', '00'],
+        ['00', '00', '00', '00', 'wB', '00', 'wP', 'wP'],
+        ['00', '00', '00', '00', '00', 'wQ', 'wR', 'wK'],
+    ]);
+});
+
 test('PGN module #pgnToPosition multiple Queens vertical battery move', t => {
     t.deepEqual(pgn.pgnToPosition(['e4','d5','Nc3','d4','f4','dxc3','Nf3','cxb2','Be2','bxa1=Q','O-O','Qxa2','Qe1','Qxc2','d4','Qxd4+','Kh1','Qcd2','Ba3','Qd1']), [
         ['bR', 'bN', 'bB', '00', 'bK', 'bB', 'bN', 'bR'],

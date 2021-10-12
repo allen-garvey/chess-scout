@@ -228,20 +228,62 @@ function moveSinglePiece(position, move, isWhite, pieceSymbol){
 }
 
 function moveQueen(position, move, isWhite){
-    function findPiece(pieces, column, row){
+    function isHorizontalClear(column, row, x){
+        const startColumn = Math.min(x, column) + 1;
+        const endColumn = Math.max(x, column);
+        for(let i=startColumn;i<endColumn;i++){
+            if(position[row][i] !== EMPTY_CELL){
+                return false;
+            }
+        }
+        return true;
+    }
+    function isVerticalClear(column, row, y){
+        const startRow = Math.min(y, row) + 1;
+        const endRow = Math.max(y, row);
+        for(let i=startRow;i<endRow;i++){
+            if(position[i][column] !== EMPTY_CELL){
+                return false;
+            }
+        }
+        return true;
+    }
+    function isDiagonalClear(column, row, x, y){
+        const startRow = Math.min(y, row) + 1;
+        const endRow = Math.max(y, row);
+        let startColumn = x;
+        let columnIncrement = y < row ? -1 : 1;
+        if(startRow + 1 === row){
+            startColumn = column;
+            columnIncrement = row < y ? -1 : 1;
+        }
+        for(let i=startRow,j=1;i<endRow;i++,j++){
+            if(position[i][startColumn+(j*columnIncrement)] !== EMPTY_CELL){
+                return false;
+            }
+        }
+        return true;
+    }
+    function findPiece(pieces, column, row, specifiedColumn, specifiedRow){
         if(pieces.length === 1){
             return pieces[0];
         }
         const piecePolarity = getPolarity(column, row);
         for(const piece of pieces){
             const {x, y} = piece;
-            if(x === column){
+            if(specifiedColumn !== false && x !== specifiedColumn){
+                continue;
+            }
+            if(specifiedRow !== false && y !== specifiedRow){
+                continue;
+            }
+            if(x === column && isVerticalClear(column, row, y)){
                 return piece;
             }
-            if(y === row){
+            if(y === row && isHorizontalClear(column, row, x)){
                 return piece;
             }
-            if(piecePolarity === getPolarity(x, y)){
+            if(piecePolarity === getPolarity(x, y) && isDiagonalClear(column, row, x, y)){
                 return piece;
             }
         }
@@ -250,8 +292,10 @@ function moveQueen(position, move, isWhite){
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${QUEEN}`;
+    const movedPieceColumn = move.length >= 4 && /^[a-h]$/.test(move[1]) ? getColumn(move[1]) : false;
+    const movedPieceRow = move.length >= 4 && /^[1-8]$/.test(move[1]) ? getRow(move[1]) : false;
     const foundPieces = findPieces(position, piece);
-    const foundPiece = findPiece(foundPieces, column, row);
+    const foundPiece = findPiece(foundPieces, column, row, movedPieceColumn, movedPieceRow);
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;
     newPosition[foundPiece.y][foundPiece.x] = EMPTY_CELL;
@@ -358,8 +402,7 @@ function pgnToPosition(moves){
             case /^R[a-h1-8]?x?[a-h]\d$/.test(cleanedMove):
                 position = moveRook(position, cleanedMove, isWhite);
                 break;
-            case /^Qx?[a-h]\d$/.test(cleanedMove):
-                // TODO: this will not work if there are multiple queens
+            case /^Q[a-h1-8]?x?[a-h]\d$/.test(cleanedMove):
                 position = moveQueen(position, cleanedMove, isWhite);
                 break;
             case /^Kx?[a-h]\d$/.test(cleanedMove):
