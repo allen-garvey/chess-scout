@@ -164,11 +164,11 @@ function moveKnight(position, move, isWhite){
     return newPosition;
 }
 
-function moveBishop(position, move, isWhite){
-    function getPolarity(n1, n2){
-        return n1 % 2 === n2 % 2;
-    }
+function getPolarity(n1, n2){
+    return n1 % 2 === n2 % 2;
+}
 
+function moveBishop(position, move, isWhite){
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${BISHOP}`;
@@ -220,6 +220,38 @@ function moveSinglePiece(position, move, isWhite, pieceSymbol){
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${pieceSymbol}`;
     const foundPiece = findPieces(position, piece)[0];
+    const newPosition = copyPosition(position);
+    newPosition[row][column] = piece;
+    newPosition[foundPiece.y][foundPiece.x] = EMPTY_CELL;
+    
+    return newPosition;
+}
+
+function moveQueen(position, move, isWhite){
+    function findPiece(pieces, column, row){
+        if(pieces.length === 1){
+            return pieces[0];
+        }
+        const piecePolarity = getPolarity(column, row);
+        for(const piece of pieces){
+            const {x, y} = piece;
+            if(x === column){
+                return piece;
+            }
+            if(y === row){
+                return piece;
+            }
+            if(piecePolarity === getPolarity(x, y)){
+                return piece;
+            }
+        }
+    }
+
+    const column = getColumn(move[move.length - 2]);
+    const row = getRow(move[move.length - 1]);
+    const piece = `${isWhite ? WHITE : BLACK}${QUEEN}`;
+    const foundPieces = findPieces(position, piece);
+    const foundPiece = findPiece(foundPieces, column, row);
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;
     newPosition[foundPiece.y][foundPiece.x] = EMPTY_CELL;
@@ -328,7 +360,7 @@ function pgnToPosition(moves){
                 break;
             case /^Qx?[a-h]\d$/.test(cleanedMove):
                 // TODO: this will not work if there are multiple queens
-                position = moveSinglePiece(position, cleanedMove, isWhite, QUEEN);
+                position = moveQueen(position, cleanedMove, isWhite);
                 break;
             case /^Kx?[a-h]\d$/.test(cleanedMove):
                 position = moveSinglePiece(position, cleanedMove, isWhite, KING);

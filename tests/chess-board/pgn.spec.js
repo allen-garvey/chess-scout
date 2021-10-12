@@ -467,3 +467,29 @@ test('PGN module #pgnToPosition pawn promotes to Rook by capture', t => {
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
     ]);
 });
+
+test('PGN module #pgnToPosition multiple Queens unambiguous move', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4','d5','Nc3','Nf6','e5','d4','exf6','dxc3','fxg7','cxb2','gxh8=Q','bxa1=Q','Qxa1']), [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', '00', '00'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', '00', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['wP', '00', 'wP', 'wP', '00', 'wP', 'wP', 'wP'],
+        ['wQ', '00', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'],
+    ]);
+});
+
+test('PGN module #pgnToPosition multiple Queens vertical battery move', t => {
+    t.deepEqual(pgn.pgnToPosition(['e4','d5','Nc3','d4','f4','dxc3','Nf3','cxb2','Be2','bxa1=Q','O-O','Qxa2','Qe1','Qxc2','d4','Qxd4+','Kh1','Qcd2','Ba3','Qd1']), [
+        ['bR', 'bN', 'bB', '00', 'bK', 'bB', 'bN', 'bR'],
+        ['bP', 'bP', 'bP', '00', 'bP', 'bP', 'bP', 'bP'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', '00', '00', '00', '00', '00'],
+        ['00', '00', '00', 'bQ', 'wP', 'wP', '00', '00'],
+        ['wB', '00', '00', '00', '00', 'wN', '00', '00'],
+        ['00', '00', '00', '00', 'wB', '00', 'wP', 'wP'],
+        ['00', '00', '00', 'bQ', 'wQ', 'wR', '00', 'wK'],
+    ]);
+});
