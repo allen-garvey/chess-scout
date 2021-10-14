@@ -2,8 +2,18 @@
     <div>
         <form @submit.prevent="submitAction()">
             <div :class="$style.searchContainer">
-                <label :class="$style.searchLabel">Lichess User Name<input type="search" class="form-control" v-model="userNameInput" v-focus /></label>
-                <input :class="[$style.button, 'btn',  'btn-primary']" type="submit" value="Submit" :disabled="!userNameInput" />
+                <label :class="$style.searchLabel">Lichess User Name<input 
+                    type="search" 
+                    class="form-control"
+                    placeholder="EricRosen"  
+                    v-model="userNameInput" 
+                    v-focus /></label>
+                <input 
+                    :class="[$style.button, 'btn',  'btn-primary']" 
+                    type="submit" 
+                    value="Submit"
+                    :disabled="!userNameInput" 
+                />
             </div>
             <div :class="$style.checkboxContainer">
                 <div v-for="gameType in gameTypes" :key="gameType.key">
