@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     mode: 'development',
     entry: [
-            `${__dirname}/src/index.js`, 
+            `${__dirname}/src/index.ts`, 
             `${__dirname}/sass/app.scss`,
         ],
     output: {
@@ -68,7 +68,18 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader'
             },
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+                options: {
+                    appendTsSuffixTo: [/\.vue$/],
+                },
+            },
         ]
+    },
+    resolve: {
+        extensions: ['.ts', '.js', '.vue', '.json'],
     },
     plugins: [
         new VueLoaderPlugin(),

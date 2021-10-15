@@ -57,11 +57,12 @@
     }
 </style>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import gameTypes from '../game-types';
 import focus from './directives/focus';
 
-export default {
+export default defineComponent({
     directives: {
         focus,
     },
@@ -84,5 +85,5 @@ export default {
             return `${gameType.key}_checkbox_id`;
         },
     }
-};
+});
 </script>

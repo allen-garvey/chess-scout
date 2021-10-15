@@ -1,3 +1,9 @@
+export type Board = string[][];
+interface Coordinate {
+    x: number;
+    y: number;
+}
+
 const BLACK = 'b';
 const WHITE = 'w';
 const EMPTY_CELL = '00';
@@ -8,7 +14,7 @@ const QUEEN = 'Q';
 const KING = 'K';
 const ROOK = 'R';
 
-function getStartingPostion(){
+function getStartingPostion(): Board{
     return [
         ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
         ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
@@ -21,7 +27,7 @@ function getStartingPostion(){
     ];
 }
 
-function transverseVertical(position, startingRow, shouldReverse, callback){
+function transverseVertical(position: Board, startingRow: number, shouldReverse: boolean, callback){
     if(shouldReverse){
         for(let i=startingRow-1;i>=0;i--){
             const shouldBreak = callback(position[i]);
@@ -39,15 +45,15 @@ function transverseVertical(position, startingRow, shouldReverse, callback){
     }
 }
 
-function copyPosition(position){
+function copyPosition(position: Board): Board{
     return position.map(row => row.slice());
 }
 
-function getRow(row){
+function getRow(row: string): number{
     return (parseInt(row) - 8) * -1;
 }
 
-function getColumn(column){
+function getColumn(column: string): number{
     const columnCleaned = column.toUpperCase();
     let ret = 0;
     switch(columnCleaned){
@@ -71,8 +77,8 @@ function getColumn(column){
     return ret;
 }
 
-function findPieces(position, piece){
-    const ret = [];
+function findPieces(position: Board, piece: string): Coordinate[]{
+    const ret: Coordinate[] = [];
     position.forEach((line, y) => line.forEach((p, x) => {
         if(p === piece){
             ret.push({
@@ -84,8 +90,8 @@ function findPieces(position, piece){
     return ret;
 }
 
-function findRooks(position, column, row, color){
-    const ret = [];
+function findRooks(position: Board, column: number, row: number, color: string): Coordinate[]{
+    const ret: Coordinate[] = [];
     const rowTest = position[row];
     const pieceToLookFor = `${color}${ROOK}`;
     for(let x=column+1;x<rowTest.length;x++){
@@ -144,7 +150,7 @@ function findRooks(position, column, row, color){
     return ret;
 }
 
-function moveKnight(position, move, isWhite){
+function moveKnight(position: Board, move: string, isWhite: boolean): Board{
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${KNIGHT}`;
@@ -164,11 +170,11 @@ function moveKnight(position, move, isWhite){
     return newPosition;
 }
 
-function getPolarity(n1, n2){
+function getPolarity(n1: number, n2: number): boolean{
     return n1 % 2 === n2 % 2;
 }
 
-function moveBishop(position, move, isWhite){
+function moveBishop(position: Board, move: string, isWhite: boolean): Board{
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${BISHOP}`;
@@ -189,7 +195,7 @@ function moveBishop(position, move, isWhite){
     return newPosition;
 }
 
-function moveRook(position, move, isWhite){
+function moveRook(position: Board, move: string, isWhite: boolean): Board{
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const color = isWhite ? WHITE : BLACK;
@@ -215,7 +221,7 @@ function moveRook(position, move, isWhite){
     return newPosition;
 }
 
-function moveKing(position, move, isWhite){
+function moveKing(position: Board, move: string, isWhite: boolean): Board{
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${KING}`;
@@ -227,8 +233,8 @@ function moveKing(position, move, isWhite){
     return newPosition;
 }
 
-function moveQueen(position, move, isWhite){
-    function isHorizontalClear(column, row, x){
+function moveQueen(position: Board, move: string, isWhite: boolean): Board{
+    function isHorizontalClear(column, row, x): boolean{
         const startColumn = Math.min(x, column) + 1;
         const endColumn = Math.max(x, column);
         for(let i=startColumn;i<endColumn;i++){
@@ -238,7 +244,7 @@ function moveQueen(position, move, isWhite){
         }
         return true;
     }
-    function isVerticalClear(column, row, y){
+    function isVerticalClear(column, row, y): boolean{
         const startRow = Math.min(y, row) + 1;
         const endRow = Math.max(y, row);
         for(let i=startRow;i<endRow;i++){
@@ -248,7 +254,7 @@ function moveQueen(position, move, isWhite){
         }
         return true;
     }
-    function isDiagonalClear(column, row, x, y){
+    function isDiagonalClear(column, row, x, y): boolean{
         const startRow = Math.min(y, row) + 1;
         const endRow = Math.max(y, row);
         let startColumn = x;
@@ -264,7 +270,7 @@ function moveQueen(position, move, isWhite){
         }
         return true;
     }
-    function findPiece(pieces, column, row, specifiedColumn, specifiedRow){
+    function findPiece(pieces: Coordinate[], column: number, row: number, specifiedColumn: number|false, specifiedRow): Coordinate{
         if(pieces.length === 1){
             return pieces[0];
         }
@@ -287,6 +293,8 @@ function moveQueen(position, move, isWhite){
                 return piece;
             }
         }
+        //should never hit this
+        return {x: -1, y: -1};
     }
 
     const column = getColumn(move[move.length - 2]);
@@ -303,7 +311,7 @@ function moveQueen(position, move, isWhite){
     return newPosition;
 }
 
-function movePawn(position, move, isWhite){
+function movePawn(position: Board, move: string, isWhite: boolean): Board{
     const column = getColumn(move[0]);
     const row = getRow(move[1]);
     const color = isWhite ? WHITE : BLACK;
@@ -320,7 +328,7 @@ function movePawn(position, move, isWhite){
     return newPosition;
 }
 
-function pawnTakes(position, move, isWhite){
+function pawnTakes(position: Board, move: string, isWhite: boolean): Board{
     const column = getColumn(move[2]);
     const row = getRow(move[3]);
     const color = isWhite ? WHITE : BLACK;
@@ -337,7 +345,7 @@ function pawnTakes(position, move, isWhite){
     return newPosition;
 }
 
-function pawnPromotes(position, move, isWhite){
+function pawnPromotes(position: Board, move: string, isWhite: boolean): Board{
     const column = getColumn(move[move.length - 4]);
     const row = getRow(move[move.length - 3]);
     const color = isWhite ? WHITE : BLACK;
@@ -352,7 +360,7 @@ function pawnPromotes(position, move, isWhite){
     return newPosition;
 }
 
-function shortCastle(position, isWhite){
+function shortCastle(position: Board, isWhite: boolean): Board{
     const color = isWhite ? WHITE : BLACK;
     const row = isWhite ? 7 : 0;
     const newPosition = copyPosition(position);
@@ -364,7 +372,7 @@ function shortCastle(position, isWhite){
     return newPosition;
 }
 
-function longCastle(position, isWhite){
+function longCastle(position: Board, isWhite: boolean): Board{
     const color = isWhite ? WHITE : BLACK;
     const row = isWhite ? 7 : 0;
     const newPosition = copyPosition(position);
@@ -376,7 +384,7 @@ function longCastle(position, isWhite){
     return newPosition;
 }
 
-function pgnToPosition(moves){
+function pgnToPosition(moves: string[]): Board{
     let position = getStartingPostion();
     let isWhite = false;
 
@@ -397,12 +405,13 @@ function pgnToPosition(moves){
                 position = moveKnight(position, cleanedMove, isWhite);
                 break;
             case /^B[a-h]?x?[a-h]\d$/.test(cleanedMove):
+                // TODO: this will not work with multiple Bishops of same color
                 position = moveBishop(position, cleanedMove, isWhite);
                 break;
             case /^R[a-h1-8]?x?[a-h]\d$/.test(cleanedMove):
                 position = moveRook(position, cleanedMove, isWhite);
                 break;
-            case /^Q[a-h1-8]?x?[a-h]\d$/.test(cleanedMove):
+            case /^Qx?[a-h]\d$/.test(cleanedMove):
                 position = moveQueen(position, cleanedMove, isWhite);
                 break;
             case /^Kx?[a-h]\d$/.test(cleanedMove):

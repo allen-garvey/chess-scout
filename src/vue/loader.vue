@@ -96,7 +96,8 @@
     }
 </style>
 
-<script>
-export default {
-};
+<script lang="ts">
+import { defineComponent } from 'vue';
+export default defineComponent({
+});
 </script>

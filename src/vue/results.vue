@@ -56,15 +56,16 @@
     }
 </style>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import gameTypes from '../game-types';
 import MoveTree from './move-tree.vue';
 import ChessBoard from './chess-board.vue';
 import Loader from './loader.vue';
 import Search from './search.vue';
-import { getUserGamesStats } from '../ajax';
+import { getUserGamesStats, UserGameStats } from '../ajax';
 
-export default {
+export default defineComponent({
     props: {
         userName: {
             type: String,
@@ -89,7 +90,7 @@ export default {
     },
     data(){
         return {
-            userGamesStats: null,
+            userGamesStats: null as UserGameStats|null,
             moves: [],
             isWhiteSelected: null,
             isLoading: true,
@@ -130,5 +131,5 @@ export default {
             }
         },
     }
-};
+});
 </script>

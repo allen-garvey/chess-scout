@@ -4,10 +4,11 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import { drawBoard } from '../chess-board';
 
-export default {
+export default defineComponent({
     props: {
         moves: {
             type: Array,
@@ -35,5 +36,5 @@ export default {
     },
     methods: {
     }
-};
+});
 </script>

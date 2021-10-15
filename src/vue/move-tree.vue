@@ -120,10 +120,11 @@
     }
 </style>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import ResultsGraph from './results-graph.vue';
 
-export default {
+export default defineComponent({
     props: {
         title: {
             type: String,
@@ -197,5 +198,5 @@ export default {
             navigator.clipboard.writeText(pgn);
         },
     },
-};
+});
 </script>
