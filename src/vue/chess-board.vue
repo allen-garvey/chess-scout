@@ -5,20 +5,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { drawBoard } from '../chess-board';
 
 export default defineComponent({
     props: {
         moves: {
-            type: Array,
+            type: Array as PropType<Array<string>>,
             required: true,
         },
     },
     mounted(){
         const canvas: HTMLCanvasElement = this.$refs.canvas as HTMLCanvasElement;
         this.context = canvas.getContext('2d');
-        drawBoard(this.context, this.moves);
+        drawBoard(this.context!, this.moves);
     },
     data(){
         return {
@@ -28,7 +28,7 @@ export default defineComponent({
     watch: {
         moves: {
             handler(){
-                drawBoard(this.context, this.moves);
+                drawBoard(this.context!, this.moves);
             },
             deep: true,
         },
