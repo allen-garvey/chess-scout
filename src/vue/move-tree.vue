@@ -141,7 +141,7 @@ export default defineComponent({
     data(){
         return {
             currentNode: this.tree,
-            path: [],
+            path: [] as string[],
         };
     },
     computed: {

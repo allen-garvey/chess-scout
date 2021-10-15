@@ -69,7 +69,7 @@ export default defineComponent({
     data(){
         return {
             userNameInput: '',
-            gameTypes,
+            gameTypes: gameTypes(),
         };
     },
     methods: {

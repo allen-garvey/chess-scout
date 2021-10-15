@@ -38,7 +38,9 @@
 </style>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
     props: {
         total: {
             type: Number,
@@ -62,5 +64,5 @@ export default {
             return `${num / this.total * 100}%`;
         }
     }
-};
+});
 </script>

@@ -16,15 +16,14 @@ export default defineComponent({
         },
     },
     mounted(){
-        this.context = this.$refs.canvas.getContext('2d');
+        const canvas: HTMLCanvasElement = this.$refs.canvas as HTMLCanvasElement;
+        this.context = canvas.getContext('2d');
         drawBoard(this.context, this.moves);
     },
     data(){
         return {
-            context: null,
+            context: null as CanvasRenderingContext2D|null,
         };
-    },
-    computed: {
     },
     watch: {
         moves: {
@@ -34,7 +33,5 @@ export default defineComponent({
             deep: true,
         },
     },
-    methods: {
-    }
 });
 </script>

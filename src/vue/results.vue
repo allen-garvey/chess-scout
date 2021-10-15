@@ -103,7 +103,7 @@ export default defineComponent({
         gameTypesTitle(){
             return this.gameTypes.split(',')
             .map(key => {
-                const gameType = gameTypes.find(gameType => gameType.key === key);
+                const gameType = gameTypes().find(gameType => gameType.key === key);
                 return gameType ? gameType.title : '';
             })
             .filter(s => s)
