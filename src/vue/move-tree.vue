@@ -121,7 +121,8 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+import { GameNode } from '../chess/move-tree';
 import ResultsGraph from './results-graph.vue';
 
 export default defineComponent({
@@ -131,7 +132,7 @@ export default defineComponent({
             required: true,
         },
         tree: {
-            type: Object,
+            type: Object as PropType<GameNode>,
             required: true,
         },
     },
