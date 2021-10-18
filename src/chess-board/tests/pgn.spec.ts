@@ -1,4 +1,4 @@
-import pgn from '../../src/chess-board/pgn';
+import pgn from '../pgn';
 
 describe('#pgnToPosition board setup', () => {
     test('Returns starting position with no moves', () => {
