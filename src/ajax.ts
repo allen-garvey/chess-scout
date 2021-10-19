@@ -8,7 +8,7 @@ export interface UserGameStats {
 function getApiUrlForUser(userName: string, gameTypes: string): string{
     const apiUrlBase = 'https://lichess.org/api/games/user/';
     const queryParamBase = `?max=40&perfType=${gameTypes}`;
-    return `${apiUrlBase}${encodeURIComponent(userName)}${queryParamBase}`;
+    // return `${apiUrlBase}${encodeURIComponent(userName)}${queryParamBase}`;
     // for testing so not rate limited by lichess
     return `/assets/${userName}.pgn`;
 }
@@ -21,7 +21,6 @@ export function getUserGamesStats(userName: string, gameTypes: string): Promise<
         return res.text();
     }).then((text)=>{
         const games = parsePgn(text);
-        console.log(JSON.stringify(games));
         return {
             moveTrees: getMoveTrees(games, userName),
         };
