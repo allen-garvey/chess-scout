@@ -21,8 +21,9 @@ export function getUserGamesStats(userName: string, gameTypes: string): Promise<
         return res.text();
     }).then((text)=>{
         const games = parsePgn(text);
+        const moveTrees = getMoveTrees(games, userName);
         return {
-            moveTrees: getMoveTrees(games, userName),
+            moveTrees,
         };
     });
 }
