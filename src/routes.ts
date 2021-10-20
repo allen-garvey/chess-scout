@@ -1,24 +1,27 @@
+import { RouteRecordRaw } from 'vue-router';
 import SearchView from './vue/search.vue';
 import ResultsView from './vue/results.vue';
 
-export default {
-    routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: SearchView,
+const routes: RouteRecordRaw[] = [
+    {
+        path: '/',
+        name: 'home',
+        component: SearchView,
+    },
+    {
+        path: '/u/:userName',
+        name: 'userShow',
+        component: ResultsView,
+        props: (route) => {
+            const props = {
+                userName: route.params.userName,
+                gameTypes: route.query.gameTypes,
+            }; 
+            return props;
         },
-        {
-            path: '/u/:userName',
-            name: 'userShow',
-            component: ResultsView,
-            props: (route) => {
-                const props = {
-                    userName: route.params.userName,
-                    gameTypes: route.query.gameTypes,
-                }; 
-                return props;
-            },
-        }
-    ],
+    }
+];
+
+export default {
+    routes,
 };
