@@ -1,5 +1,20 @@
 import pgn from '../pgn';
 
+/*
+Create move list for pgn testing:
+
+function extractMoves(movesRaw){
+    return JSON.stringify(
+        movesRaw
+        .replace(/ (1-0|0-1|1\/2-1\/2)$/, '')
+        .split(/\d+\. /)
+        .filter(line => line)
+        .map((line) => line.replace(/\s+$/, '').split(' '))
+        .flat())
+        .replace(/"/g, "'");
+}
+*/
+
 describe('#pgnToPosition board setup', () => {
     test('Returns starting position with no moves', () => {
         expect(pgn.pgnToPosition([])).toEqual([
