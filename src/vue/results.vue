@@ -4,7 +4,7 @@
         <search :class="$style.search" v-if="isLoaded" />
         <div v-if="isLoaded">
             <div :class="$style.header">
-                <h1 :class="$style.title">Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener">{{userName}}</a></h1>
+                <h1 :class="$style.title">Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener noreferrer">{{userName}}</a></h1>
                 <div :class="$style.gameTypes" v-if="gameTypesTitle">{{ gameTypesTitle }}</div>
             </div>
             <div :class="$style.content">
