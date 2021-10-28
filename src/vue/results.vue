@@ -1,8 +1,8 @@
 <template>
     <div>
         <loader v-if="isLoading" />
-        <search :class="$style.search" v-if="isLoaded" />
-        <div v-if="isLoaded">
+        <search :class="$style.search" v-if="!isLoading" />
+        <div v-if="isLoaded && !userNotFound">
             <div :class="$style.header">
                 <h1 :class="$style.title">Opening stats for <a :href="urlForUser(userName)" target="_blank" rel="noopener noreferrer">{{userName}}</a></h1>
                 <div :class="$style.gameTypes" v-if="gameTypesTitle">{{ gameTypesTitle }}</div>
@@ -24,6 +24,9 @@
                     />
                 </div>
             </div>
+        </div>
+        <div v-if="!isLoading && userNotFound">
+            <h2>User {{ userName }} not found</h2>
         </div>
     </div>
 </template>
@@ -83,10 +86,11 @@ export default defineComponent({
         Loader,
     },
     created(){
-        this.loadUserGames();
+        this.loadUserGames(this.userName);
     },
-    beforeRouteUpdate(){
-        this.loadUserGames();
+    beforeRouteUpdate(to, from){
+        console.log(to);
+        this.loadUserGames(to.params.userName);
     },
     data(){
         return {
@@ -94,6 +98,7 @@ export default defineComponent({
             moves: [],
             isWhiteSelected: null,
             isLoading: true,
+            userNotFound: false,
         };
     },
     computed: {
@@ -111,11 +116,15 @@ export default defineComponent({
         },
     },
     methods: {
-        loadUserGames(){
+        loadUserGames(userName){
             this.isLoading = true;
-            getUserGamesStats(this.userName, this.gameTypes).then((stats)=>{
+            getUserGamesStats(userName, this.gameTypes).then((stats)=>{
                 this.userGamesStats = stats;
                 this.isLoading = false;
+                this.userNotFound = false;
+            }).catch(() => {
+                this.isLoading = false;
+                this.userNotFound = true;
             });
         },
         urlForUser(userName){
