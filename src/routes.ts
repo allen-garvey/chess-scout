@@ -1,12 +1,12 @@
 import { RouteRecordRaw } from 'vue-router';
-import SearchView from './vue/search.vue';
+import Homepage from './vue/homepage.vue';
 import ResultsView from './vue/results.vue';
 
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
         name: 'home',
-        component: SearchView,
+        component: Homepage,
     },
     {
         path: '/u/:userName',

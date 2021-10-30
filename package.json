@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack serve --config webpack.config.js",
     "test": "jest",
+    "hydrate": "curl --header 'Accept: application/vnd.lichess.v3+json' https://lichess.org/player > public/top-players.json",
     "build": "webpack --config webpack.config.js",
     "deploy": "webpack --config webpack.config.js --mode='production'",
     "watch": "webpack --config webpack.config.js --watch"
