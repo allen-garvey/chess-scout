@@ -5,6 +5,7 @@
             <h3>{{ gameType }}</h3>
             <ol>
                 <li v-for="player in topPlayers[gameType]" :key="player.id">
+                    <span :class="$style.playerTitle">{{ player.title ? `${player.title}` : '' }}</span>
                     <router-link :to="{ name: 'userShow', params: { userName: player.id }, query: { gameTypes: gameType } }">{{ player.username }}</router-link>
                 </li>
             </ol>
@@ -15,6 +16,10 @@
 <style lang="scss" module>
 .container {
 
+}
+.playerTitle {
+    display: inline-block;
+    min-width: 2em;
 }
 </style>
 
