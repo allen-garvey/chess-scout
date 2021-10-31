@@ -37,4 +37,5 @@ Thumbs.db
 .elixir_ls/*
 
 public/assets/*
+public/*.json
 deploy/**/*
