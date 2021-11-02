@@ -9,6 +9,7 @@
     "hydrate": "curl --header 'Accept: application/vnd.lichess.v3+json' https://lichess.org/player > public/top-players.json",
     "build": "webpack --config webpack.config.js",
     "deploy": "webpack --config webpack.config.js --mode='production'",
+    "package": "mkdir -p deploy && rsync -av --exclude='*.pgn' public/ deploy",
     "watch": "webpack --config webpack.config.js --watch"
   },
   "author": "",

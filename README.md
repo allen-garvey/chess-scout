@@ -7,6 +7,7 @@ This web app uses the Lichess api to visualize the results of chess openings / m
 * node >= 14.14
 * npm
 * curl
+* rsync
 
 ## Getting Started
 
@@ -14,6 +15,12 @@ This web app uses the Lichess api to visualize the results of chess openings / m
 * `npm install`
 * `npm run hydrate`
 * `npm start`
+
+## Deploying
+
+* `npm run deploy`
+* `npm run package`
+* Output is in `/deploy`
 
 ## Attributions
 
