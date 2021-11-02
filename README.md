@@ -6,11 +6,13 @@ This web app uses the Lichess api to visualize the results of chess openings / m
 
 * node >= 14.14
 * npm
+* curl
 
 ## Getting Started
 
 * Clone or download this repository
 * `npm install`
+* `npm run hydrate`
 * `npm start`
 
 ## Attributions
