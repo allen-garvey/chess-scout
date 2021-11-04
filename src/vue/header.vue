@@ -1,7 +1,7 @@
 <template>
     <div :class="$style.container">
         <h1 :class="$style.title">
-            <router-link :to="{ name: 'home' }">Chess Scout</router-link>
+            <router-link :to="{ name: 'home' }" :class="$style.link">Chess Scout</router-link>
         </h1>
     </div>
 </template>
@@ -12,6 +12,9 @@
     }
     .title {
         margin: 0;
+    }
+    .link {
+        text-decoration: none;
     }
 </style>
 
