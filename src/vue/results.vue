@@ -1,6 +1,7 @@
 <template>
     <div>
         <loader v-if="isLoading" />
+        <Header v-if="!isLoading" />
         <search :class="$style.search" v-if="!isLoading" />
         <div v-if="isLoaded && !userNotFound">
             <div :class="$style.header">
@@ -62,6 +63,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import gameTypes from '../game-types';
+import Header from './header.vue';
 import MoveTree from './move-tree.vue';
 import ChessBoard from './chess-board.vue';
 import Loader from './loader.vue';
@@ -80,6 +82,7 @@ export default defineComponent({
         },
     },
     components: {
+        Header,
         Search,
         MoveTree,
         ChessBoard,
