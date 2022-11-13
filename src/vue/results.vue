@@ -92,7 +92,6 @@ export default defineComponent({
         this.loadUserGames(this.userName);
     },
     beforeRouteUpdate(to, from){
-        console.log(to);
         this.loadUserGames(to.params.userName);
     },
     data(){
