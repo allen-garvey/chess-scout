@@ -13,7 +13,7 @@
                     <button :class="$style.clickable" @click="childClicked(childKey)">
                         <h5 :class="$style.statTitle">
                             <span>{{ childKey }} {{ ' ' }}</span> 
-                            <span :class="$style.gamesCount">{{ getChild(childKey).games.length }} games </span> 
+                            <span :class="$style.gamesCount">{{ getChild(childKey).games.length }} {{ gameDescriptor(getChild(childKey).games.length) }} </span> 
                             <span :class="$style.gamesCountPercentage">{{ calculatePercentage(getChild(childKey).games.length, totalGames) }}%</span>
                         </h5>
                         <results-graph 
@@ -209,6 +209,9 @@ export default defineComponent({
         copyPgn(){
             const pgn = this.treeTitle.replace(/^ - /, '');
             navigator.clipboard.writeText(pgn);
+        },
+        gameDescriptor(count){
+            return count === 1 ? 'game' : 'games';
         },
     },
 });
