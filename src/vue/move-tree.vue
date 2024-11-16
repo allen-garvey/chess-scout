@@ -10,7 +10,7 @@
                     :key="index" 
                     :class="$style.statItem"
                 >
-                    <div :class="$style.clickable" @click="childClicked(childKey)">
+                    <button :class="$style.clickable" @click="childClicked(childKey)">
                         <h5 :class="$style.statTitle">
                             <span>{{ childKey }} {{ ' ' }}</span> 
                             <span :class="$style.gamesCount">{{ getChild(childKey).games.length }} games </span> 
@@ -36,7 +36,7 @@
                                 {{calculatePercentage(getChild(childKey).results.losses, getChild(childKey).games.length)}}%
                             </dd>
                         </dl>
-                    </div>
+                    </button>
                     <ul 
                         :class="$style.gameLinksList"
                         v-if="getChild(childKey).games.length <= 4"
@@ -70,14 +70,24 @@
     }
 
     .clickable {
+        text-align: left;
+        border: none;
         cursor: pointer;
         padding: 0.25em;
+        background-color: transparent;
+        color: #000;
 
         &:hover {
             color: #000;
             background-color: #d1eeff;
         }
     }
+    @media (prefers-color-scheme: dark) {
+        .clickable {
+            color: #fff;
+        }
+    }
+
     .title {
         font-size: 1.25rem;
         margin: 0 0 0.7rem;
