@@ -71,8 +71,10 @@
 
     .clickable {
         cursor: pointer;
+        padding: 0.25em;
 
         &:hover {
+            color: #000;
             background-color: #d1eeff;
         }
     }
