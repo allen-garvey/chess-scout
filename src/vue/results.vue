@@ -120,6 +120,8 @@ export default defineComponent({
     methods: {
         loadUserGames(userName){
             this.isLoading = true;
+            this.moves = [];
+            this.isWhiteSelected = null;
             getUserGamesStats(userName, this.gameTypes).then((stats)=>{
                 this.userGamesStats = stats;
                 this.isLoading = false;
