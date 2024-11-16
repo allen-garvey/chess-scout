@@ -14,7 +14,7 @@ const QUEEN = 'Q';
 const KING = 'K';
 const ROOK = 'R';
 
-function getStartingPostion(): Board{
+function getStartingPostion(): Board {
     return [
         ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
         ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
@@ -27,36 +27,41 @@ function getStartingPostion(): Board{
     ];
 }
 
-function transverseVertical(position: Board, startingRow: number, shouldReverse: boolean, callback){
-    if(shouldReverse){
-        for(let i=startingRow-1;i>=0;i--){
+function transverseVertical(
+    position: Board,
+    startingRow: number,
+    shouldReverse: boolean,
+    callback
+) {
+    if (shouldReverse) {
+        for (let i = startingRow - 1; i >= 0; i--) {
             const shouldBreak = callback(position[i]);
-            if(shouldBreak){
+            if (shouldBreak) {
                 break;
             }
         }
         return;
     }
-    for(let i=startingRow+1;i<position.length;i++){
+    for (let i = startingRow + 1; i < position.length; i++) {
         const shouldBreak = callback(position[i]);
-        if(shouldBreak){
+        if (shouldBreak) {
             break;
         }
     }
 }
 
-function copyPosition(position: Board): Board{
-    return position.map(row => row.slice());
+function copyPosition(position: Board): Board {
+    return position.map((row) => row.slice());
 }
 
-function getRow(row: string): number{
+function getRow(row: string): number {
     return (parseInt(row) - 8) * -1;
 }
 
-function getColumn(column: string): number{
+function getColumn(column: string): number {
     const columnCleaned = column.toUpperCase();
     let ret = 0;
-    switch(columnCleaned){
+    switch (columnCleaned) {
         case 'H':
             ret++;
         case 'G':
@@ -72,77 +77,80 @@ function getColumn(column: string): number{
         case 'B':
             ret++;
         default:
-            break; 
+            break;
     }
     return ret;
 }
 
-function findPieces(position: Board, piece: string): Coordinate[]{
+function findPieces(position: Board, piece: string): Coordinate[] {
     const ret: Coordinate[] = [];
-    position.forEach((line, y) => line.forEach((p, x) => {
-        if(p === piece){
-            ret.push({
-                x,
-                y,
-            });
-        }
-    }));
+    position.forEach((line, y) =>
+        line.forEach((p, x) => {
+            if (p === piece) {
+                ret.push({
+                    x,
+                    y,
+                });
+            }
+        })
+    );
     return ret;
 }
 
-function findRooks(position: Board, column: number, row: number, color: string): Coordinate[]{
+function findRooks(
+    position: Board,
+    column: number,
+    row: number,
+    color: string
+): Coordinate[] {
     const ret: Coordinate[] = [];
     const rowTest = position[row];
     const pieceToLookFor = `${color}${ROOK}`;
-    for(let x=column+1;x<rowTest.length;x++){
+    for (let x = column + 1; x < rowTest.length; x++) {
         const piece = rowTest[x];
-        if(piece === pieceToLookFor){
+        if (piece === pieceToLookFor) {
             ret.push({
                 x,
-                y: row
+                y: row,
             });
             break;
-        }
-        else if(piece !== EMPTY_CELL){
+        } else if (piece !== EMPTY_CELL) {
             break;
         }
     }
-    for(let x=column-1;x>=0;x--){
+    for (let x = column - 1; x >= 0; x--) {
         const piece = rowTest[x];
-        if(piece === pieceToLookFor){
+        if (piece === pieceToLookFor) {
             ret.push({
                 x,
-                y: row
+                y: row,
             });
             break;
-        }
-        else if(piece !== EMPTY_CELL){
+        } else if (piece !== EMPTY_CELL) {
             break;
         }
     }
-    for(let y=row+1;y<position.length;y++){
+    for (let y = row + 1; y < position.length; y++) {
         const piece = position[y][column];
-        if(piece === pieceToLookFor){
+        if (piece === pieceToLookFor) {
             ret.push({
                 x: column,
-                y
+                y,
             });
             break;
-        }
-        else if(piece !== EMPTY_CELL){
+        } else if (piece !== EMPTY_CELL) {
             break;
         }
     }
-    for(let y=row-1;y>=0;y--){
+    for (let y = row - 1; y >= 0; y--) {
         const piece = position[y][column];
-        if(piece === pieceToLookFor){
+        if (piece === pieceToLookFor) {
             ret.push({
                 x: column,
-                y
+                y,
             });
             break;
-        }
-        else if(piece !== EMPTY_CELL){
+        } else if (piece !== EMPTY_CELL) {
             break;
         }
     }
@@ -150,78 +158,100 @@ function findRooks(position: Board, column: number, row: number, color: string):
     return ret;
 }
 
-function moveKnight(position: Board, move: string, isWhite: boolean): Board{
+function moveKnight(position: Board, move: string, isWhite: boolean): Board {
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${KNIGHT}`;
-    const movedPieceColumn = move.length >= 4 && move[1] !== 'x' ? getColumn(move[1]) : false;
+    const movedPieceColumn =
+        move.length >= 4 && move[1] !== 'x' ? getColumn(move[1]) : false;
     const foundPieces = findPieces(position, piece);
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;
 
-    for(let i=0;i<foundPieces.length;i++){
+    for (let i = 0; i < foundPieces.length; i++) {
         const coordinate = foundPieces[i];
-        if((movedPieceColumn === false || movedPieceColumn === coordinate.x) && (Math.abs(column - coordinate.x) === 1 && Math.abs(row - coordinate.y) === 2) || (Math.abs(column - coordinate.x) === 2 && Math.abs(row - coordinate.y) === 1)){
+        const doesMatchPieceStartColumn =
+            movedPieceColumn === false || movedPieceColumn === coordinate.x;
+        const is1HorizontalAnd2VerticalAwayFromDest =
+            Math.abs(column - coordinate.x) === 1 &&
+            Math.abs(row - coordinate.y) === 2;
+        const is2HorizontalAnd1VerticalFromDest =
+            Math.abs(column - coordinate.x) === 2 &&
+            Math.abs(row - coordinate.y) === 1;
+
+        if (
+            doesMatchPieceStartColumn &&
+            (is1HorizontalAnd2VerticalAwayFromDest ||
+                is2HorizontalAnd1VerticalFromDest)
+        ) {
             newPosition[coordinate.y][coordinate.x] = EMPTY_CELL;
             break;
         }
     }
-    
+
     return newPosition;
 }
 
-function getPolarity(n1: number, n2: number): boolean{
+function getPolarity(n1: number, n2: number): boolean {
     return n1 % 2 === n2 % 2;
 }
 
-function moveBishop(position: Board, move: string, isWhite: boolean): Board{
+function moveBishop(position: Board, move: string, isWhite: boolean): Board {
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${BISHOP}`;
     const piecePolarity = getPolarity(column, row);
-    const movedPieceColumn = move.length >= 4 && move[1] !== 'x' ? getColumn(move[1]) : false;
+    const movedPieceColumn =
+        move.length >= 4 && move[1] !== 'x' ? getColumn(move[1]) : false;
     const foundPieces = findPieces(position, piece);
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;
 
-    for(let i=0;i<foundPieces.length;i++){
+    for (let i = 0; i < foundPieces.length; i++) {
         const coordinate = foundPieces[i];
-        if((movedPieceColumn === false || movedPieceColumn === coordinate.x) && (piecePolarity === getPolarity(coordinate.x, coordinate.y))){
+        if (
+            (movedPieceColumn === false || movedPieceColumn === coordinate.x) &&
+            piecePolarity === getPolarity(coordinate.x, coordinate.y)
+        ) {
             newPosition[coordinate.y][coordinate.x] = EMPTY_CELL;
             break;
         }
     }
-    
+
     return newPosition;
 }
 
-function moveRook(position: Board, move: string, isWhite: boolean): Board{
+function moveRook(position: Board, move: string, isWhite: boolean): Board {
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const color = isWhite ? WHITE : BLACK;
     const piece = `${color}${ROOK}`;
-    const movedPieceColumn = move.length >= 4 && /^[a-h]$/.test(move[1]) ? getColumn(move[1]) : false;
-    const movedPieceRow = move.length >= 4 && /^[1-8]$/.test(move[1]) ? getRow(move[1]) : false;
+    const movedPieceColumn =
+        move.length >= 4 && /^[a-h]$/.test(move[1])
+            ? getColumn(move[1])
+            : false;
+    const movedPieceRow =
+        move.length >= 4 && /^[1-8]$/.test(move[1]) ? getRow(move[1]) : false;
     const foundPieces = findRooks(position, column, row, color);
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;
 
-    for(let i=0;i<foundPieces.length;i++){
+    for (let i = 0; i < foundPieces.length; i++) {
         const coordinate = foundPieces[i];
-        if(
-            (movedPieceColumn === false || movedPieceColumn === coordinate.x) && 
+        if (
+            (movedPieceColumn === false || movedPieceColumn === coordinate.x) &&
             (movedPieceRow === false || movedPieceRow === coordinate.y) &&
             (coordinate.x === column || coordinate.y === row)
-        ){
+        ) {
             newPosition[coordinate.y][coordinate.x] = EMPTY_CELL;
             break;
         }
     }
-    
+
     return newPosition;
 }
 
-function moveKing(position: Board, move: string, isWhite: boolean): Board{
+function moveKing(position: Board, move: string, isWhite: boolean): Board {
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${KING}`;
@@ -229,89 +259,108 @@ function moveKing(position: Board, move: string, isWhite: boolean): Board{
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;
     newPosition[foundPiece.y][foundPiece.x] = EMPTY_CELL;
-    
+
     return newPosition;
 }
 
-function moveQueen(position: Board, move: string, isWhite: boolean): Board{
-    function isHorizontalClear(column, row, x): boolean{
+function moveQueen(position: Board, move: string, isWhite: boolean): Board {
+    function isHorizontalClear(column, row, x): boolean {
         const startColumn = Math.min(x, column) + 1;
         const endColumn = Math.max(x, column);
-        for(let i=startColumn;i<endColumn;i++){
-            if(position[row][i] !== EMPTY_CELL){
+        for (let i = startColumn; i < endColumn; i++) {
+            if (position[row][i] !== EMPTY_CELL) {
                 return false;
             }
         }
         return true;
     }
-    function isVerticalClear(column, row, y): boolean{
+    function isVerticalClear(column, row, y): boolean {
         const startRow = Math.min(y, row) + 1;
         const endRow = Math.max(y, row);
-        for(let i=startRow;i<endRow;i++){
-            if(position[i][column] !== EMPTY_CELL){
+        for (let i = startRow; i < endRow; i++) {
+            if (position[i][column] !== EMPTY_CELL) {
                 return false;
             }
         }
         return true;
     }
-    function isDiagonalClear(column, row, x, y): boolean{
+    function isDiagonalClear(column, row, x, y): boolean {
         const startRow = Math.min(y, row) + 1;
         const endRow = Math.max(y, row);
         let startColumn = x;
         let columnIncrement = y < row ? -1 : 1;
-        if(startRow + 1 === row){
+        if (startRow + 1 === row) {
             startColumn = column;
             columnIncrement = row < y ? -1 : 1;
         }
-        for(let i=startRow,j=1;i<endRow;i++,j++){
-            if(position[i][startColumn+(j*columnIncrement)] !== EMPTY_CELL){
+        for (let i = startRow, j = 1; i < endRow; i++, j++) {
+            if (position[i][startColumn + j * columnIncrement] !== EMPTY_CELL) {
                 return false;
             }
         }
         return true;
     }
-    function findPiece(pieces: Coordinate[], column: number, row: number, specifiedColumn: number|false, specifiedRow): Coordinate{
-        if(pieces.length === 1){
+    function findPiece(
+        pieces: Coordinate[],
+        column: number,
+        row: number,
+        specifiedColumn: number | false,
+        specifiedRow
+    ): Coordinate {
+        if (pieces.length === 1) {
             return pieces[0];
         }
         const piecePolarity = getPolarity(column, row);
-        for(const piece of pieces){
-            const {x, y} = piece;
-            if(specifiedColumn !== false && x !== specifiedColumn){
+        for (const piece of pieces) {
+            const { x, y } = piece;
+            if (specifiedColumn !== false && x !== specifiedColumn) {
                 continue;
             }
-            if(specifiedRow !== false && y !== specifiedRow){
+            if (specifiedRow !== false && y !== specifiedRow) {
                 continue;
             }
-            if(x === column && isVerticalClear(column, row, y)){
+            if (x === column && isVerticalClear(column, row, y)) {
                 return piece;
             }
-            if(y === row && isHorizontalClear(column, row, x)){
+            if (y === row && isHorizontalClear(column, row, x)) {
                 return piece;
             }
-            if(piecePolarity === getPolarity(x, y) && isDiagonalClear(column, row, x, y)){
+            if (
+                piecePolarity === getPolarity(x, y) &&
+                isDiagonalClear(column, row, x, y)
+            ) {
                 return piece;
             }
         }
         //should never hit this
-        return {x: -1, y: -1};
+        return { x: -1, y: -1 };
     }
 
     const column = getColumn(move[move.length - 2]);
     const row = getRow(move[move.length - 1]);
     const piece = `${isWhite ? WHITE : BLACK}${QUEEN}`;
-    const movedPieceColumn = move.length >= 4 && /^[a-h]$/.test(move[1]) ? getColumn(move[1]) : false;
-    const movedPieceRow = move.length >= 4 && /^[1-8]$/.test(move[1]) ? getRow(move[1]) : false;
+    const movedPieceColumn =
+        move.length >= 4 && /^[a-h]$/.test(move[1])
+            ? getColumn(move[1])
+            : false;
+    const movedPieceRow =
+        move.length >= 4 && /^[1-8]$/.test(move[1]) ? getRow(move[1]) : false;
     const foundPieces = findPieces(position, piece);
-    const foundPiece = findPiece(foundPieces, column, row, movedPieceColumn, movedPieceRow);
+    const foundPiece = findPiece(
+        foundPieces,
+        column,
+        row,
+        movedPieceColumn,
+        movedPieceRow
+    );
     const newPosition = copyPosition(position);
     newPosition[row][column] = piece;
     newPosition[foundPiece.y][foundPiece.x] = EMPTY_CELL;
-    
+
     return newPosition;
 }
 
-function movePawn(position: Board, move: string, isWhite: boolean): Board{
+function movePawn(position: Board, move: string, isWhite: boolean): Board {
     const column = getColumn(move[0]);
     const row = getRow(move[1]);
     const color = isWhite ? WHITE : BLACK;
@@ -319,7 +368,7 @@ function movePawn(position: Board, move: string, isWhite: boolean): Board{
     newPosition[row][column] = `${color}${PAWN}`;
 
     transverseVertical(newPosition, row, !isWhite, (localRow) => {
-        if(localRow[column][1] === PAWN){
+        if (localRow[column][1] === PAWN) {
             localRow[column] = EMPTY_CELL;
             return true;
         }
@@ -328,7 +377,7 @@ function movePawn(position: Board, move: string, isWhite: boolean): Board{
     return newPosition;
 }
 
-function pawnTakes(position: Board, move: string, isWhite: boolean): Board{
+function pawnTakes(position: Board, move: string, isWhite: boolean): Board {
     const column = getColumn(move[2]);
     const row = getRow(move[3]);
     const color = isWhite ? WHITE : BLACK;
@@ -336,7 +385,7 @@ function pawnTakes(position: Board, move: string, isWhite: boolean): Board{
     const piece = `${color}${PAWN}`;
     const rowFrom = isWhite ? row + 1 : row - 1;
     // check for en passant
-    if(newPosition[row][column] === EMPTY_CELL){
+    if (newPosition[row][column] === EMPTY_CELL) {
         newPosition[rowFrom][column] = EMPTY_CELL;
     }
     newPosition[row][column] = piece;
@@ -345,14 +394,14 @@ function pawnTakes(position: Board, move: string, isWhite: boolean): Board{
     return newPosition;
 }
 
-function pawnPromotes(position: Board, move: string, isWhite: boolean): Board{
+function pawnPromotes(position: Board, move: string, isWhite: boolean): Board {
     const column = getColumn(move[move.length - 4]);
     const row = getRow(move[move.length - 3]);
     const color = isWhite ? WHITE : BLACK;
     const newPosition = copyPosition(position);
     const piece = `${color}${move[move.length - 1]}`;
     newPosition[row][column] = piece;
-    
+
     const columnFrom = getColumn(move[0]);
     const rowFrom = isWhite ? 1 : 6;
     newPosition[rowFrom][columnFrom] = EMPTY_CELL;
@@ -360,7 +409,7 @@ function pawnPromotes(position: Board, move: string, isWhite: boolean): Board{
     return newPosition;
 }
 
-function shortCastle(position: Board, isWhite: boolean): Board{
+function shortCastle(position: Board, isWhite: boolean): Board {
     const color = isWhite ? WHITE : BLACK;
     const row = isWhite ? 7 : 0;
     const newPosition = copyPosition(position);
@@ -372,7 +421,7 @@ function shortCastle(position: Board, isWhite: boolean): Board{
     return newPosition;
 }
 
-function longCastle(position: Board, isWhite: boolean): Board{
+function longCastle(position: Board, isWhite: boolean): Board {
     const color = isWhite ? WHITE : BLACK;
     const row = isWhite ? 7 : 0;
     const newPosition = copyPosition(position);
@@ -384,14 +433,14 @@ function longCastle(position: Board, isWhite: boolean): Board{
     return newPosition;
 }
 
-function pgnToPosition(moves: string[]): Board{
+function pgnToPosition(moves: string[]): Board {
     let position = getStartingPostion();
     let isWhite = false;
 
     moves.forEach((move) => {
         isWhite = !isWhite;
         const cleanedMove = move.replace(/[+#]$/, '');
-        switch(true){
+        switch (true) {
             case /^\w\d$/.test(cleanedMove):
                 position = movePawn(position, cleanedMove, isWhite);
                 break;
@@ -421,8 +470,8 @@ function pgnToPosition(moves: string[]): Board{
                 position = shortCastle(position, isWhite);
                 break;
             case move === 'O-O-O':
-                    position = longCastle(position, isWhite);
-                    break;
+                position = longCastle(position, isWhite);
+                break;
         }
     });
 
