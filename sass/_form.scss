@@ -148,3 +148,9 @@
     background-color: #0b5ed7;
     border-color: #0a58ca;
   }
+
+  @media (prefers-color-scheme: dark) {
+    .btn-primary {
+      background-color: #2b80ff;
+    }
+  }

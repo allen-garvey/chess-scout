@@ -10,3 +10,22 @@ body {
     max-width: 1080px;
     padding: 1rem 1rem 0;
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+        color: #fff;
+    }
+
+    a {
+        color: #59adff;
+
+        &:visited {
+            color: rgb(144, 67, 217);
+        }
+
+        &:active {
+            color: red;
+        }
+    }
+}
